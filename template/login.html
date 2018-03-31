@@ -1,0 +1,37 @@
+<md-content flex layout="row" layout-align="space-around" layout-padding="layout-padding" ng-cloak="ng-cloak">
+ <md-card  flex-gt-sm="38" flex-gt-md="36" style= " max-height:700px"> 
+  <md-card-content>
+     <form name="userForm">
+ 		<h1 class="sfYUmb" data-a11y-title-piece="" id="headingText" jsname="z6sL2b">Sign in</h1>
+ 		<p class="FgbZLd" data-a11y-title-piece="" id="headingSubtext">to continue to ToDo</p>
+ 		
+ 			<!-- <center><font color="red"><p ng-bind="error" ng-disable></p></font></center> -->
+ 			
+              <md-input-container class = "md-block">
+                  <label>Email</label>
+                 <input type="email" name="email" class="form-control" ng-model="user.email" required>
+                  <div ng-messages = "userForm.email.$error" role = "alert">
+                     <div ng-message = "required">This is required.</div> 
+                  </div>
+               </md-input-container>
+			</div>
+                   <md-input-container class = "md-block">
+                  <label>Password</label>
+		            <input type="password" name="password" class="form-control" ng-model="user.password" required>
+                  <div ng-messages = "userForm.password.$error">
+                     <div ng-message = "required">This is required.</div>
+                  </div><br>
+                   <a ui-sref="forgotPassword">Forgot Password?</a>    
+               </md-input-container>   
+                                      
+				      <!-- <button type="submit" id="submit" class="btn btn-primary"  width:80px"><b>Login</b></button> -->
+				      <md-button md-no-ink class="md-primary" ng-click="loginUser()" ng-disabled="loginform.$invalid" style=""">Login</md-button>
+				      <a  href="#!/register" role="button"  style="margin-right: 20%; width:80px"><b>New User?</b></a>
+					<p><span id ="errmsg"></span></p>
+					<button class="loginBtn loginBtn--facebook"><a href="facebookLogin">Login with Facebook</a></button>
+					<button class="loginBtn loginBtn--google"><a href="loginWithGoogle">Login with Google</a></button>
+		</form>
+   </md-card-actions>
+ </md-card> 
+</md-content>
+ 

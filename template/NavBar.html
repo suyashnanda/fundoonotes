@@ -1,0 +1,87 @@
+
+<div>
+<md-toolbar ng-style="{'background-color':navBarColor};" style="position: fixed;" >
+
+    <div class="md-toolbar-tools">
+    	<!-- <span role button style="padding:10px; color: black" ng-click = "openLeftMenu()">&#9776;</span>
+    	 -->
+    	
+    	<md-button style="padding:10px; color: black" class="md-icon-button" ng-click="toggleLeft()">&#9776;</md-button>
+      	
+  <div style="padding:10px">    	
+      	<h2 md-truncate  style="weight:100px;color:black" ng-bind="title"></h2>
+      	
+  </div><b><img src="images/search-icon.png" style="width:35px;"/></b>
+  <div hide-xs flex>
+   <div flex-gt-sm="85" >
+   
+		   <md-autocomplete flex="50"
+		    md-items=""
+		    placeholder="Search Note"
+		    ui-sref="search">
+		    
+      		</md-autocomplete> 
+	  </div>
+	
+	    </div>
+	        
+	      
+	         <md-button style="min-width:25px;padding:5px" aria-label="Refresh" ng-click="refresh()">	 
+	        	 <md-tooltip md-direction="bottom">Refresh</md-tooltip>
+		      	 <md-icon  md-svg-src="images/refresh.svg"  style="width:21px;fill:black" ></md-icon>
+	        </md-button>
+	        
+	        <div ng-init="view()">
+	        <md-button ng-if="list" style="min-width:25px;padding:5px" aria-label="Share" ng-click="displayView('list')">	 
+	        	 <md-tooltip md-direction="bottom">List view</md-tooltip>
+		      	 <md-icon  md-svg-src="images/list.svg"  style="width:21px;fill:black" ></md-icon>
+	        </md-button>
+	        
+	         <md-button ng-if="grid" style="min-width:25px;padding:5px" aria-label="View" ng-click="displayView('grid')">	 
+	        	 <md-tooltip md-direction="bottom">Grid view</md-tooltip>
+		      	  <md-icon  md-svg-src="images/grid.svg"  style="width:21px;fill:black" ></md-icon>
+	        </md-button>
+	        </div>
+	        
+	        <md-menu>
+	       	<md-button class="md-fab md-icon my-icon-button" aria-label="User" ng-click="$mdMenu.open($event)">
+	       		 	
+	       		 	<md-tooltip md-direction="bottom">{{user.email}}</md-tooltip>
+	       		 	
+            	<img ng-src="{{user.picUrl}}" alt="{{user.name.charAt(0)}}" style=" height: 100%;width: 100%;">
+        	</md-button>
+	 			
+			<md-menu-content  width="2" md-direction="bottom" style="overflow: hidden;">
+                
+                <div flex>
+                	
+	          <div layout="row" flex>
+				<div layout="column">
+						<md-button class="md-fab md-icon my-icon-button" aria-label="User">
+			   			         	<img ng-src="{{user.picUrl}}" style=" height: 100%;width: 100%;">
+			       		</md-button>
+	       		</div><span>
+			       		<div layout="column">
+			       			<p>{{user.name}}</p>
+			   				{{user.email}}
+			   			</div>
+			   			</span>
+	   			</div>
+	  				 <md-divider></md-divider>
+	  				 
+	  				 	<md-button class="md-raised " ng-click="openImageUploader('user')">Change Profile</md-button>
+	  				 	
+	  					<md-button class="md-raised md-primary" ng-click="logout()">Logout</md-button>
+	  				
+  				</div>
+  				
+          </md-menu-content>
+          
+        </md-menu>
+	
+	  </b> 	 	
+	  
+	 </div>
+  </md-toolbar>
+
+</div>

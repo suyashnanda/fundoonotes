@@ -1,0 +1,50 @@
+ <md-sidenav class="md-sidenav-left" md-component-id="left" md-whiteframe="4" >
+<!-- <md-sidenav class="md-sidenav-left" style=" margin-top:50px;width:10em" md-component-id="left" md-is-locked-open="dash.openInfo">
+ -->
+    <md-list >
+    
+    	<md-list-item ng-show="user.role=='admin'"> 
+	
+			<md-button  ng-click="adminDashboard()" aria-label="AdminPanel" flex layout="row" layout-align="start center"> 
+				<img flex-offset="15" ng-src="images/dashboard.svg">
+				<span flex-offset="15">Admin Dashboard</span>
+			</md-button> 
+		</md-list-item>
+      
+      <md-list-item ui-sref="home">
+        
+        Notes
+   
+      </md-list-item>
+      <md-list-item ui-sref="archive">
+   
+          Archives
+        
+      </md-list-item>
+      <md-list-item ui-sref="reminder">
+      
+          Reminders
+        
+      </md-list-item>
+      
+         <p> Labels</p>
+         		<div ng-repeat="label in labels">
+  				<span ng-click="labelState(label)">{{label.name}}</span>
+  					
+  				<md-icon  md-svg-src="images/clear.svg" ng-click="deleteLabel(label)"></md-icon>
+  					
+  				</div>
+  		<md-list-item ng-click="createLabel($event,user)">
+  				
+  				Create new label
+  		</md-list-item>
+
+      </md-list-item>
+      <md-list-item  ui-sref="trash">
+            Trash
+        
+      </md-list-item>
+      
+    </md-list>
+
+</md-sidenav>

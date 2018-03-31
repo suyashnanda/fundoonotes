@@ -1,0 +1,53 @@
+<div>
+	<div>
+		<tool-bar></tool-bar>
+	</div>
+<div layout="row">
+			 <side-bar></side-bar>
+
+	<div flex="10" style="margin-left: 180px;"></div>
+
+	<div flex="80" layout="row" layout-wrap style=" margin-top: 5em;">
+	<div ng-if="note.reminder" ng-repeat="note in notes" id="note-scope" flex={{view}}>
+
+	<md-card class="card" id="float" ng-style="{'background-color' : note.color}">
+	<div aria-label="unpin note">
+ 		<md-button style="min-width:15px;float:right" >
+ 		<md-tooltip md-direction="bottom">Unpin note</md-tooltip>
+				<img id="pinIcon" ng-src="images/pin.svg" style="width:21px;float:right" ng-click="pinned(note,true)"/>
+				</md-button>
+				
+			</div>
+	 <div ng-if="note.image"><img ng-click="updateEditedNote(note,$event)" ng-src={{note.image}} style="width: 95%;padding-left: 5px;"></div>
+	        <md-card-title>
+		          <md-card-title-text class="update">
+		          
+		          
+		           	<div>
+		            	<div ng-click="updateEditedNote(note,$event)" ng-bind-html="note.title" ng-show="true" id="title"  style="word-break: break-all;border:0px;outline:0px">{{note.title}}</div>
+		            </div>
+		            <br>
+		            <div>
+		            	<div ng-click="updateEditedNote(note,$event)" ng-bind-html="note.body" ng-show="true" id="body"   style="word-break: break-all;border:0px;outline:0px">{{note.body}}</div>
+		            </div>
+		           
+		          </md-card-title-text>
+	        </md-card-title>
+	        
+	          <div ng-if="note.labels">
+  				 <span ng-repeat="label in note.labels" class="chip">
+  				 <span  ng-bind="getLabelName(label)"></span>
+  				<span class="closebtn" ng-click="removeLabel(note,label)">&times;</span></span>
+			</div>
+	     	<p class="lastDive" ng-if="note.reminder" style="font-size:10px;padding:8px">Reminder : {{note.reminder | date:'medium'}}
+		     	<md-icon md-svg-src="images/delete.svg" ng-click="deleteRemender(note)" style="width:21px;float:right;margin-top:-13px"></md-icon></p>
+
+			<card-action></card-action>
+      	</md-card>
+         
+	</div>	
+	
+	</div>
+	<div flex="5"></div>
+</div>
+<div>

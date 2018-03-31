@@ -1,0 +1,32 @@
+{
+  "name": "webapp",
+  "homepage": "https://github.com/akashbadave7/ToDo",
+  "authors": [
+    "akashbadave7 <akash.badave7@gmail.com>"
+  ],
+  "description": "",
+  "main": "",
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular": "^1.6.6",
+    "angular-material": "^1.1.5",
+    "angular-ui-router": "^1.0.11",
+    "angular-aria": "^1.6.6",
+    "angular-animate": "^1.6.6",
+    "angular-sanitize": "^1.6.6",
+    "ui-navbar": "^0.5.2",
+    "ng-file-upload": "^12.2.13",
+    "angular-toastr": "^2.1.1",
+    "angular-base64": "^2.0.5",
+    "angular-base64-upload": "^0.1.23",
+    "angular-material-datetimepicker": "^1.5.1",
+    "angular-jquery": "^0.2.1"
+  }
+}

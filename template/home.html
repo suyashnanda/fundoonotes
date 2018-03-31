@@ -1,0 +1,202 @@
+<div>
+	<tool-bar></tool-bar>
+</div>
+ <side-bar></side-bar>
+ <md-content style="margin-left: 180px; overflow: hidden !important;" >
+
+<div layout="row" layout-gt-xs >
+
+ 		
+	  
+ 	  <div flex="10"></div>
+ 			<div flex="80" >
+ 	
+ 	<md-content layout="row" layout-align="start center"  flex  style="overflow: visible; margin-top: 5em;    width: 80%;">
+    <div flex="15"></div>
+    
+      <md-card flex style="background-color: {{color}}">
+        
+     	   <div style="cursor: pointer;" style="padding: 0px;" aria-label="unpin note" layout="row" layout-align="end center">
+           				<img ng-if="!pinStatus" ng-src="images/unpin.svg"  ng-show="displayDiv" ng-click="pinUnpin()"/>
+           				<img ng-if="pinStatus" ng-src="images/pin.svg" style=" margin-bottom: -35px;" ng-click="pinUnpin()" />
+           	</div>
+      <md-card-title style="padding: 12pxgetNotes;">
+          <md-card-title-text>
+        
+           	<div ><!-- ng-show="imageSrc.length" -->
+      				<img ng-if="addImg!=''" ng-src="{{addImg}}" style=" max-width: 100%;"/>
+    		</div>
+           	<div>
+            	<div contenteditable="true" name="title" strip-br="true" 
+            		ng-model="note.title" ng-show="displayDiv" id="title" placeholder="Title"  
+            		style="width:500px;border:0px;outline:0px"></div>
+            </div>
+            <br>
+            <div>
+            	<div 
+            	contenteditable="true" name="body" strip-br="true" ng-model="note.body" 
+            	ng-show="true" id="body" placeholder="Take a note..." ng-click="show()" 
+            	style="width:500px;border:0px;outline:0px"></div>
+            </div>
+           
+          </md-card-title-text>
+        </md-card-title>
+       
+		<new-note-action></new-note-action>
+      </md-card>
+   <div flex="15"></div>
+ </md-content> 
+ 
+ 	 <p>
+		<h4 ng-show="(notes.length - otherNotes.length)" ng-click="closeNote()" style="outline: none;">Pinned</h4>
+	
+	<div layout="row" layout-wrap flex  ng-click="closeNote()" style="outline: none;">
+		<!--=========================Pinned=============================================  -->
+	<div ng-repeat="note in notes" ng-if="note.pinned" id="note-scope" flex="{{view}}" ng-init="getCollabUser(note)">
+	<md-card style="width:{{width}}" id="float" ng-style="{'background-color' : note.color}" flex class="card">	
+		
+      		<md-button style="min-width:15px" class="pin"  aria-label="unpin note" >
+      		<md-tooltip md-direction="bottom">Unpin note</md-tooltip>
+     				<md-icon id="lastDiv" md-svg-src="images/pin.svg" style="width:21px;float:right" ng-click="pinned(note,false)"></md-icon>
+     		</md-button>
+         				
+        
+	       <div ng-if="note.image">
+	       		<img ng-click="updateEditedNote(note,$event)" ng-src={{note.image}} class="cardImage">
+	       	</div>
+	        <md-card-title>
+		          <md-card-title-text class="update">
+		         
+		           	<div >
+		            	<div ng-click="updateEditedNote(note,$event)" ng-bind-html="note.title" ng-show="true" id="title" style="font-weight: bold;word-break: break-all;border:0px;outline:0px;">{{note.title}}</div>
+		            </div>
+		            <br>
+		            <div>
+		            	<div ng-click="updateEditedNote(note,$event)" ng-bind-html="note.body" ng-show="true" id="body" style="word-break: break-all;border:0px;outline:0px">{{note.body}}</div>
+		            </div>
+		           
+		          </md-card-title-text>
+	        </md-card-title>
+	       
+	     	 	<p class="lastDive" ng-if="note.reminder" style="font-size:10px;padding:8px">Reminder : {{note.reminder | date:'medium'}}</p>
+<!-- 		     	<md-icon md-svg-src="images/delete.svg" ng-click="deleteRemender(note)" style="width:21px;float:right;margin-top:-13px"></md-icon> -->
+	        	 <span class="closebtn" ng-click="deleteRemender(note)">&times;</span></span>
+	       
+	       
+	       
+	        <div ng-if="note.labels">
+  				 <span ng-repeat="label in note.labels" class="chip">
+  				 <span  ng-bind="getLabelName(label)"></span>
+  				<span class="closebtn" ng-click="removeLabel(note,label)">&times;</span></span>
+			</div>
+			
+	        
+	     	<div>
+	     		<span ng-repeat="user in note.collabuser">
+	   				  <img ng-src="{{user.picUrl}}" class="collabIcon">
+	     		</span>
+	     	</div>
+	       
+	       <card-action></card-action>
+     		
+     		<md-divider></md-divider>
+     		
+
+     			<span layout="column" ng-show="note.link.length"  ng-style="{ 'background-color': '#fff'}" flex ng-init="checkUlr(note)">
+     				<md-card flex>
+     				<div layout="row" flex ng-repeat="link in note.link" >
+     					
+     					<img class"linkimage" ng-src="{{link.urlImage}}" width="50px" height="50px"/>
+     					<span class="linkStyle">{{link.urlTitle}}<br>
+     					
+     						{{link.urlDomain}}
+     						<a href="{{link.url}}" target="_blank"><img class="gotoicon" ng-src="images/gotolink.svg" style="width:21px"></a>
+     					</span>
+     					 
+     				</div>
+     				<md-divider></md-divider>
+     				</md-card>
+     			</span>
+     
+     			
+     		
+     	
+     		</md-card>
+         </div>
+	</div>
+	
+		<h4 ng-show="otherNotes.length && (notes.length - otherNotes.length)" ng-click="closeNote()" style="outline: none;">Others</h4>
+	<div layout="row" layout-wrap flex ng-click="closeNote()" style="outline: none;">
+		<!--=========================OTHER=============================================  -->
+	<div ng-repeat="note in notes | filter:{pinned:false,trash:false,archive:false} as otherNotes "  id="note-scope" flex="{{view}}" ng-init="getCollabUser(note)">
+	
+	<md-card style="width:{{width}}" id="float" ng-style="{'background-color' : note.color}" flex class="card">
+  
+      	 	<md-button style="min-width:15px;" class="pin" arial-label="Pin note">
+       		<md-tooltip md-direction="bottom">Pin note</md-tooltip>
+      				<md-icon id="lastDiv" md-svg-src="images/unpin.svg" style="width:21px;float:right" ng-click="pinned(note,true)"></md-icon>
+      		</md-button>
+          
+	       	<div ng-if="note.image">
+	       		<img ng-click="updateEditedNote(note,$event)" ng-src={{note.image}} class="cardImage">
+	       	</div>
+	        <md-card-title>
+		          <md-card-title-text class="update">
+		         	 
+		           	<div>
+		            	<div ng-click="updateEditedNote(note,$event)" ng-bind-html="note.title" ng-show="true" id="title"  style="font-weight: bold;word-break: break-all;border:0px;outline:0px;">{{note.title}}</div>
+		            </div>
+		            <br>
+		            <div>
+		            	<div ng-click="updateEditedNote(note,$event)" ng-bind-html="note.body" ng-show="true" id="body"   style="word-break: break-all;border:0px;outline:0px">{{note.body}}</div>
+		            </div>
+		           
+		          </md-card-title-text>
+	        </md-card-title>
+	        
+	        <div ng-if="note.labels">
+  				 <span ng-repeat="label in note.labels" class="chip">
+  				 <span  ng-bind="getLabelName(label)"></span>
+  				<span class="closebtn" ng-click="removeLabel(note,label)">&times;</span></span>
+			</div>
+	      
+	      	<div>
+	     		<span ng-repeat="user in note.collabuser">
+	   				  <img ng-src="{{user.picUrl}}" class="collabIcon">
+	     		</span>
+	     	</div>
+	     	<p class="lastDive" ng-if="note.reminder" style="font-size:10px;padding:8px">Reminder : {{note.reminder | date:'medium'}}
+		     	<md-icon md-svg-src="images/delete.svg" ng-click="deleteRemender(note)" style="width:21px;float:right;margin-top:-13px"></md-icon></p>
+
+			
+					<card-action></card-action>
+
+	        	
+	        		<md-divider></md-divider>
+     		
+
+     			<span layout="column" ng-show="note.link.length"  ng-style="{ 'background-color': '#fff'}" flex ng-init="checkUlr(note)">
+     				<md-card flex>
+     				<div layout="row" flex ng-repeat="link in note.link" >
+     					
+     					<img class"linkimage" ng-src="{{link.urlImage}}" width="50px" height="50px"/>
+     					<span class="linkStyle">{{link.urlTitle}}<br>
+     					
+     						{{link.urlDomain}}
+     		<a href="{{link.url}}" target="_blank"><img class="gotoicon" ng-src="images/gotolink.svg" style="width:21px"></a>
+     		 <md-content>			</span>
+     				</div>
+     				<md-divider></md-divider>
+     				</md-card>
+     			</span>
+     
+     		</md-card>
+         	</div>
+			</div>
+	
+	
+   </div>
+    <div flex="5">
+  </div>
+</div>
+</md-content>
