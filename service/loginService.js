@@ -1,18 +1,18 @@
 /**
- * 
+ *
  */
 
 var ToDo = angular.module('ToDo')
 
-ToDo.factory('loginService',function($http,$location){
+ToDo.factory('loginService',function($http,$location,httpService){
 	var login ={};
-	
+
 	login.service = function(method,url,user){
 		return $http({
 			method :method,
-			url :url,
+			url : httpService.baseUrl + url,
 			data : user
-			
+
 		});
 	}
 

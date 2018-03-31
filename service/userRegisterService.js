@@ -1,13 +1,13 @@
 var ToDo = angular.module('ToDo')
 
-ToDo.factory('userRegisterService',function($http,$location){
+ToDo.factory('userRegisterService',function($http,$location,httpService){
 	var details ={};
-	
+
 	details.registerUser = function(user){
-		console.log("service"+user);
+
 		return $http({
 			method :"POST",
-			url :'userRegister',
+			url : httpService.baseUrl + 'userRegister',
 			data : user
 		})
 	}
