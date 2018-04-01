@@ -168,7 +168,7 @@ ToDo.controller('homeController', function($rootScope, $scope, fileReader, $loca
 
   /**function to get all the notes with its label attached to it*/
   var getNotesActual = function() {
-    var url = 'getnotes';
+    var url = 'getNotes';
     var notes = noteService.service(url, 'GET', notes);
     notes.then(function(response) {
       $scope.notes = response.data;
@@ -462,7 +462,7 @@ ToDo.controller('homeController', function($rootScope, $scope, fileReader, $loca
     $timeout(getLabelsActual, 1000);
   }
   var getLabelsActual = function() {
-    var url = 'getalllabel';
+    var url = 'getAllLabel';
     var labels = noteService.service(url, 'GET');
     labels.then(function(response) {
       $scope.labels = response.data;
