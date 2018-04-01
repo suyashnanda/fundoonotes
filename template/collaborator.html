@@ -1,64 +1,64 @@
 <md-dialog flex="45" style="background-color:white">
 	<md-dialog-content>
-	
-			<md-title md-padding><h3>Collaborators</h3></md-title>
-			<md-divider></md-divider>
-			
-		<div layout="row" flex >
-				<div layout="column" flex="15">
-					<md-button class="md-fab md-icon my-icon-button" aria-label="User">
-	   			         	<img ng-src="{{owner.picUrl}}" style=" height: 100%;width: 100%;">
-	       		</md-button>
-	       		</div>
-			       		<div layout="column" flex="20" style="margin-top: 15px;">
-			       			<div layout="row">
-			       			{{owner.name}} (Owner)
-			   				</div>	
-			   				{{owner.email}}
-			   			</div>
-	   	</div>
-	   	<div ng-repeat="user in collabuser">
-	   			<div layout="row" flex >
-				<div layout="column" flex="15">
-					<md-button class="md-fab md-icon my-icon-button" aria-label="User">
-	   			         	<img ng-src="{{user.picUrl}}" style=" height: 100%;width: 100%;">
-	       		</md-button>
-	       		</div>
-			       		<div layout="column" flex  style="margin-top: 15px;">
-			       			<div layout="row">
-			       			{{user.name}} 
-			   				</div>	
-			   				{{user.email}}
-			   			</div>
-		
-	   	
-	   	<md-button style="min-width:25px;padding:5px;float:right" ng-click="removeCollaborator(user)" aria-label="Delete">
-		<md-tooltip md-direction="bottom">Delete</md-tooltip>
-			<md-icon md-svg-src="images/cancel.svg" aria-lable="Delete"></md-icon>
-		</md-button>
+
+		<md-title md-padding>
+			<h3>Collaborators</h3></md-title>
+		<md-divider></md-divider>
+
+		<div layout="row" flex>
+			<div layout="column" flex="15">
+				<md-button class="md-fab md-icon my-icon-button" aria-label="User">
+					<img ng-src="{{owner.picUrl}}" style=" height: 100%;width: 100%;">
+				</md-button>
+			</div>
+			<div layout="column" flex="20" style="margin-top: 15px;">
+				<div layout="row">
+					{{owner.name}} (Owner)
+				</div>
+				{{owner.email}}
+			</div>
 		</div>
-	   	</div>
-	   	<div layout="row" flex>
-	   		<div layout="column" flex="15">
-	   			<md-button class="md-fab md-icon my-icon-button" aria-label="User">
-	   			         <md-icon md-svg-src="images/share.svg" ng-click="" style="width:21px"></md-icon>
-	   		 </md-button>	
-	   	</div>
-         
-         <md-input-container>
-        <label>Email</label>
-        	<input ng-model="search" type="text" style="width: 26em;" list="dataList">
-        	<datalist id="dataList">
+
+		<div ng-repeat="user in collabuser">
+			<div layout="row" flex>
+				<div layout="column" flex="15">
+					<md-button class="md-fab md-icon my-icon-button" aria-label="User">
+						<img ng-src="{{user.picUrl}}" style=" height: 100%;width: 100%;">
+					</md-button>
+				</div>
+				<div layout="column" flex style="margin-top: 15px;">
+					<div layout="row">
+						{{user.name}}
+					</div>
+					{{user.email}}
+				</div>
+				<md-button style="min-width:25px;padding:5px;float:right" ng-click="removeCollaborator(user)" aria-label="Delete">
+					<md-tooltip md-direction="bottom">Delete</md-tooltip>
+					<md-icon md-svg-src="images/cancel.svg" aria-lable="Delete"></md-icon>
+				</md-button>
+			</div>
+		</div>
+		<div layout="row" flex>
+			<div layout="column" flex="15">
+				<md-button class="md-fab md-icon my-icon-button" aria-label="User">
+					<md-icon md-svg-src="images/share.svg" ng-click="" style="width:21px"></md-icon>
+				</md-button>
+			</div>
+
+			<md-input-container>
+				<label>Email</label>
+				<input ng-model="search" type="text" style="width: 26em;" list="dataList">
+				<datalist id="dataList">
         	<option ng-repeat="email in userList">{{email}}</option>
         	</datalist>
-     	 </md-input-container>
-		
-      </div>
-	   			<md-divider></md-divider>
-	   			<md-panel>
-	   				<md-button md-autofocus flex class="md-primary" ng-click="getUserEmail()">
-      					Done
-   				 </md-button>
-	   			</md-panel>
+			</md-input-container>
+
+		</div>
+		<md-divider></md-divider>
+		<md-panel>
+			<md-button md-autofocus flex class="md-primary" ng-click="getUserEmail()">
+				Done
+			</md-button>
+		</md-panel>
 	</md-dialog-content>
 </md-dialog>

@@ -1,130 +1,121 @@
 <md-dialog flex="45" style="max-height: 600px;background-color:{{mdDialogData.color}};">
- 	<md-dialog-content style="max-height: 550px;">
- 		
- 		
- 		<span ng-if="mdDialogData.pinned">
+  <md-dialog-content style="max-height: 550px;">
+
+
+    <span ng-if="mdDialogData.pinned">
  			<img ng-src="images/pin.svg" class="pin" ng-click="pinned(mdDialogData,false)"/>
  		</span>
- 		<span ng-if="!mdDialogData.pinned">
+    <span ng-if="!mdDialogData.pinned">
  		<md-icon  md-svg-src="images/unpin.svg" class="pin" ng-click="pinned(mdDialogData,true)"></md-icon>
- 		</span>	
-		 <div ng-if="mdDialogData.image"><img ng-src={{mdDialogData.image}} style="width: 100%;">	
-		 	<span>
-			
+ 		</span>
+    <div ng-if="mdDialogData.image"><img ng-src={{mdDialogData.image}} style="width: 100%;">
+      <span>
+
 			<md-button class="removeImage" ng-click="removeImage(mdDialogData)" aria-label="Delete">
 			<md-tooltip md-direction="bottom">Delete</md-tooltip>
 			<md-icon md-svg-src="images/cancel.svg" aria-lable="Delete"></md-icon>
 			</md-button>
 			</span>
-		</div>
-		
-	
-		<md-input-container class="md-block">
-  				<div ng-bind-html="mdDialogData.title"  id="updatedNoteTitle" contenteditable="{{editable}}" contenteditabledata  aria-multiline="true" role="textbox" style="background-color: rgb(250, 250, 250); outline:none; background-color:{{mdDialogData.color}}"  ></div>
-		</md-input-container>
+    </div>
 
-		<md-input-container class="md-block">
-			  <div ng-bind-html="mdDialogData.body" id="updatedNoteBody" contenteditable="{{editable}}" contenteditabledata  aria-multiline="true" role="textbox" style="background-color: rgb(250, 250, 250); outline:none; background-color:{{mdDialogData.color}}"  ></div>
-		</md-input-container>
-		
-		 <div ng-if="mdDialogData.labels">
-  				 <span  ng-repeat="label in mdDialogData.labels" class="chip">{{label.name}}
+    <md-input-container class="md-block">
+      <div ng-bind-html="mdDialogData.title" id="updatedNoteTitle" contenteditable="{{editable}}" contenteditabledata aria-multiline="true" role="textbox" style="background-color: rgb(250, 250, 250); outline:none; background-color:{{mdDialogData.color}}"></div>
+    </md-input-container>
+
+    <md-input-container class="md-block">
+      <div ng-bind-html="mdDialogData.body" id="updatedNoteBody" contenteditable="{{editable}}" contenteditabledata aria-multiline="true" role="textbox" style="background-color: rgb(250, 250, 250); outline:none; background-color:{{mdDialogData.color}}"></div>
+    </md-input-container>
+
+    <div ng-if="mdDialogData.labels">
+      <span ng-repeat="label in mdDialogData.labels" class="chip">{{label.name}}
   				<span class="closebtn" ng-click="removeLabel(mdDialogData,label)">&times;</span></span>
-		</div>
-		
-			<span ng-repeat="user in  mdDialogData.collaborator">
+    </div>
+
+    <span ng-repeat="user in  mdDialogData.collaborator">
 	   				  <img ng-src="{{user.picUrl}}" class="collabIcon">
 	     	</span>
-		
-		<div layout="row" layout-align="end start">Edited {{mdDialogData.lastUpdated | date:'medium'}}</div>
-		</md-dialog-content>
-	
-		<md-dialog-actions>
-		
-	        <md-panel>
-		      <p class="icon">
-		       	<!--  <md-button style="min-width:25px";> -->	
-		       	 <md-menu>
-		       			<md-button style="min-width:25px;padding:5px" ng-click="$mdMenu.open($event)" area-label="Remender">
-		       				<md-tooltip md-direction="bottom">Reminder</md-tooltip>
-		       				<img src="images/remender.svg" >
-		       			</md-button>
-		              <md-menu-content>
-		              	<md-menu-item>
-		             
-						<button class="md-raised md-primary md-button md-ink-ripple" type="button"=""
-						ng-click="displayDialog(note)">Display Picker</button>
-						
-		                </md-menu-item>
-		              </md-menu-content>
-		       	</md-menu>
-	        			
-	        			<md-button style="min-width:25px;padding:5px" aria-label="Share" ng-click="collaborators(mdDialogData,$event)">
-	        			<md-tooltip md-direction="bottom">Share</md-tooltip>
-		       				<md-icon md-svg-src="images/share.svg" ng-click="" style="width:21px"></md-icon>
-	        			</md-button>
-	        			
-	        			
-	        			
-						<color-picker class ="colorIcon" value ="cardColor" color="color" options="colors" on-color-changed="colorChanged(newColor, oldColor,mdDialogData)"></color-picker>	 
-	        			
-	        			<!-- <md-button style="min-width:25px;padding:5px" aria-label="Change color">
-	        			<md-tooltip md-direction="bottom">Change color</md-tooltip>
-	        				<md-icon md-svg-src="images/color.svg" ng-click="" style="width:21px"></md-icon>
-	        			</md-button>
-	        			 -->
-	        			<md-button style="min-width:25px;padding:5px" aria-label="Add image" ng-click="openImageUploader(mdDialogData,'update')">
-						<input ng-show="false" id="image" type='file' ng-model-instant ng-model="file" onchange="angular.element(this).scope().imageUpload(this)" />
-	        			<md-tooltip md-direction="bottom">Add image</md-tooltip>
-	        				<md-icon md-svg-src="images/uploadImg.svg" style="width:21px;"></md-icon>
-	        			</md-button>
-	        			
-	        			<span ng-if="!mdDialogData.archive">
+
+    <div layout="row" layout-align="end start">Edited {{mdDialogData.lastUpdated | date:'medium'}}</div>
+  </md-dialog-content>
+
+  <md-dialog-actions>
+
+    <md-panel>
+      <p class="icon">
+        <md-menu>
+          <md-button style="min-width:25px;padding:5px" ng-click="$mdMenu.open($event)" area-label="Remender">
+            <md-tooltip md-direction="bottom">Reminder</md-tooltip>
+            <img src="images/remender.svg">
+          </md-button>
+          <md-menu-content>
+            <md-menu-item>
+
+              <button class="md-raised md-primary md-button md-ink-ripple" type="button"="" ng-click="displayDialog(note)">Display Picker</button>
+
+            </md-menu-item>
+          </md-menu-content>
+        </md-menu>
+
+        <md-button style="min-width:25px;padding:5px" aria-label="Share" ng-click="collaborators(mdDialogData,$event)">
+          <md-tooltip md-direction="bottom">Share</md-tooltip>
+          <md-icon md-svg-src="images/share.svg" ng-click="" style="width:21px"></md-icon>
+        </md-button>
+
+
+
+        <color-picker class="colorIcon" value="cardColor" color="color" options="colors" on-color-changed="colorChanged(newColor, oldColor,mdDialogData)"></color-picker>
+
+        <md-button style="min-width:25px;padding:5px" aria-label="Add image" ng-click="openImageUploader(mdDialogData,'update')">
+          <input ng-show="false" id="image" type='file' ng-model-instant ng-model="file" onchange="angular.element(this).scope().imageUpload(this)" />
+          <md-tooltip md-direction="bottom">Add image</md-tooltip>
+          <md-icon md-svg-src="images/uploadImg.svg" style="width:21px;"></md-icon>
+        </md-button>
+
+        <span ng-if="!mdDialogData.archive">
 	        			<md-button style="min-width:25px;padding:5px" ng-click="archive(mdDialogData,true)" aria-label="Archive">
 	        			<md-tooltip md-direction="bottom">Archive</md-tooltip>
 	        				<md-icon md-svg-src="images/archive.svg" aria-lable="archive note"></md-icon>
 	        			</md-button>
 	        			</span>
-	        			
-	        			<span ng-if="mdDialogData.archive">
+
+        <span ng-if="mdDialogData.archive">
 	        			<md-button style="min-width:25px" ng-click="archive(mdDialogData,false)" area-label="Unachive">
 	        			<md-tooltip md-direction="bottom">Unarchive</md-tooltip>
 	        				<md-icon md-svg-src="images/unarchive.svg"  style="width:18px;"></md-icon>
 				        </md-button>
-	        			</span> 
-	        			
-	        			<!--  <img ng-src="images/menu.svg" style="width:21px"> -->
-				        <md-menu>
-			              <md-button style="min-width:25px;padding:5px" ng-click="$mdMenu.open($event)" aria-label="More">
-			              <md-tooltip md-direction="bottom">More</md-tooltip>
-			                <img ng-src="images/menu.svg" style="width:21px">
-			              </md-button>
-			              <md-menu-content>
-			                <md-menu-item>
-			                  <md-button class="primary" ng-click="deleteNote(mdDialogData)">Delete</md-button>
-			                </md-menu-item>
-			                <md-menu-item>
-			                  <md-button class="primary" ng-click="makeCopy(mdDialogData)">Make Copy</md-button>
-			                </md-menu-item>
-			                <md-menu>
-			                 
-               					   <md-button class="primary"  ng-click="$mdMenu.open($event)">Add Label</md-button>
-               						 <md-menu-content>
-              							<md-menu-item>
-               							 <md-checkbox ng-checked="checkboxCheck(mdDialogData, label)" ng-click="labelToggle(mdDialogData,label)" ng-repeat="label in user.labels">
-               						 		{{label.name}}
-               						 	</md-checkbox>
-               						</md-menu-item><br>
-               					</md-menu-content>
-               				
-               				</md-menu> 	
-			              </md-menu-content>
-			            </md-menu>
-			            			              <md-button ng-click="saveUpdatedNote()" class="md-primary" >Done</md-button>
-			            
-		          </p>
-		          </md-panel>
-		</md-dialog-actions>
-	
+	        			</span>
+
+        <!--  <img ng-src="images/menu.svg" style="width:21px"> -->
+        <md-menu>
+          <md-button style="min-width:25px;padding:5px" ng-click="$mdMenu.open($event)" aria-label="More">
+            <md-tooltip md-direction="bottom">More</md-tooltip>
+            <img ng-src="images/menu.svg" style="width:21px">
+          </md-button>
+          <md-menu-content>
+            <md-menu-item>
+              <md-button class="primary" ng-click="deleteNote(mdDialogData)">Delete</md-button>
+            </md-menu-item>
+            <md-menu-item>
+              <md-button class="primary" ng-click="makeCopy(mdDialogData)">Make Copy</md-button>
+            </md-menu-item>
+            <md-menu>
+
+              <md-button class="primary" ng-click="$mdMenu.open($event)">Add Label</md-button>
+              <md-menu-content>
+                <md-menu-item>
+                  <md-checkbox ng-checked="checkboxCheck(mdDialogData, label)" ng-click="labelToggle(mdDialogData,label)" ng-repeat="label in user.labels">
+                    {{label.name}}
+                  </md-checkbox>
+                </md-menu-item><br>
+              </md-menu-content>
+
+            </md-menu>
+          </md-menu-content>
+        </md-menu>
+        <md-button ng-click="saveUpdatedNote()" class="md-primary">Done</md-button>
+      </p>
+    </md-panel>
+  </md-dialog-actions>
+
 
 </md-dialog>

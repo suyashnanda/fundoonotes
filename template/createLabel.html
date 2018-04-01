@@ -1,17 +1,14 @@
 <md-card flex layout="row" layout-align="center center">
 	<md-card-content>
-			<h4>Edit labels</h4>
+		<h4>Edit labels</h4>
 		<md-input-container>
 			<label>Enter label name</label>
-			<input ng-model="labelName"/>
+			<input ng-model="labelName" />
 		</md-input-container><br>
-				<div ng-repeat="labels in userlabel.labels">
-  				<md-icon md-svg-src="images/label.svg" ></md-icon>
-  					
-  					<!-- <div ng-bind-html="" ng-show="true"> style="word-break: break-all;border:0px;outline:0px"> -->
-  					{{labels.name}}
-  					
-  				</div>
+		<div ng-repeat="labels in userlabel.labels">
+			<md-icon md-svg-src="images/label.svg"></md-icon>
+			{{labels.name}}
+		</div>
 		<md-divider></md-divider>
 		<md-card-action>
 			<md-button md-autofocus flex class="md-primary" ng-click="createLabel(labelName)">Done</md-button>

@@ -1,60 +1,54 @@
-
 <div>
 	<tool-bar></tool-bar>
 </div>
-<div layout="row" >
-	
-			 <side-bar></side-bar>
-	
+<div layout="row">
+
+	<side-bar></side-bar>
 
 	<div flex="10" style="margin-left: 180px;"></div>
 
-
 	<div flex="80" layout="row" layout-wrap style="margin-top: 5em">
-	
-	<div ng-repeat="note in notes" ng-if="note.trash" id="note-scope" flex="{{view}}">
 
-	<md-card style="width:{{width}}" id="float" ng-style="{'background-color' : note.color}" flex class="card">
-	         <div ng-if="note.image"><img ng-click="updateEditedNote(note,$event)" ng-src={{note.image}} class="cardImage"></div>
-	        <md-card-title>
-		          <md-card-title-text>
-		           	<div>
-		            	<div ng-click="updateEditedNote(note,$event)" ng-bind-html="note.title" ng-show="true" id="title"  style="word-break: break-all;border:0px;outline:0px">{{note.title}}</div>
-		            </div>
-		            <br>
-		            <div>
-		            	<div ng-click="updateEditedNote(note,$event)" ng-bind-html="note.body" ng-show="true" id="body"   style="word-break: break-all;border:0px;outline:0px">{{note.body}}</div>
-		            </div>
-		           
-		          </md-card-title-text>
-	        </md-card-title>
-	         <div ng-if="note.labels">
-  				 <span ng-repeat="label in note.labels" class="chip">
+		<div ng-repeat="note in notes" ng-if="note.trash" id="note-scope" flex="{{view}}">
+			<md-card style="width:{{width}}" id="float" ng-style="{'background-color' : note.color}" flex class="card">
+				<div ng-if="note.image"><img ng-click="updateEditedNote(note,$event)" ng-src={{note.image}} class="cardImage"></div>
+				<md-card-title>
+					<md-card-title-text>
+						<div>
+							<div ng-click="updateEditedNote(note,$event)" ng-bind-html="note.title" ng-show="true" id="title" style="word-break: break-all;border:0px;outline:0px">{{note.title}}</div>
+						</div>
+						<br>
+						<div>
+							<div ng-click="updateEditedNote(note,$event)" ng-bind-html="note.body" ng-show="true" id="body" style="word-break: break-all;border:0px;outline:0px">{{note.body}}</div>
+						</div>
+
+					</md-card-title-text>
+				</md-card-title>
+				<div ng-if="note.labels">
+					<span ng-repeat="label in note.labels" class="chip">
   				 <span  ng-bind="getLabelName(label)"></span>
-  				<span class="closebtn" ng-click="removeLabel(note,label)">&times;</span></span>
-			</div>
-	        <md-card-actions>
-		       	 <p id="lastDiv" class="icon">
-				        <md-menu>
-			              <md-button style="min-width:30px;" ng-click="$mdMenu.open($event)" aria-label="More">
-			              <md-tooltip md-direction="bottom">More</md-tooltip>
-			                <img ng-src="images/menu.svg" style="width:21px">
-			              </md-button>
-			              <md-menu-content>
-			                <md-menu-item>
-			                  <md-button ng-click="deleteNoteForever(note)">Delete Forever</md-button>
-			                </md-menu-item>
-			                <md-menu-item>
-			                  <md-button ng-click="restoreNote(note)">Restore</md-button>
-			                </md-menu-item>
-			              </md-menu-content>
-			            </md-menu>
-		          </p>
-	        </md-card-actions>
-      	</md-card>
-         
-	</div>	
-	
+					<span class="closebtn" ng-click="removeLabel(note,label)">&times;</span></span>
+				</div>
+				<md-card-actions>
+					<p id="lastDiv" class="icon">
+						<md-menu>
+							<md-button style="min-width:30px;" ng-click="$mdMenu.open($event)" aria-label="More">
+								<md-tooltip md-direction="bottom">More</md-tooltip>
+								<img ng-src="images/menu.svg" style="width:21px">
+							</md-button>
+							<md-menu-content>
+								<md-menu-item>
+									<md-button ng-click="deleteNoteForever(note)">Delete Forever</md-button>
+								</md-menu-item>
+								<md-menu-item>
+									<md-button ng-click="restoreNote(note)">Restore</md-button>
+								</md-menu-item>
+							</md-menu-content>
+						</md-menu>
+					</p>
+				</md-card-actions>
+			</md-card>
+		</div>
 	</div>
 	<div flex="5"></div>
 </div>
