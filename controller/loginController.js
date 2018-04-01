@@ -1,10 +1,7 @@
-/**
- *
- */
 var ToDo = angular.module('ToDo')
 
 ToDo.controller('loginController', function($scope, loginService, $location, toastr) {
-
+  /**function to login for user*/
   $scope.loginUser = function() {
     var a = loginService.service('POST', 'login', $scope.user, $scope.error);
     a.then(function(response) {
@@ -34,10 +31,9 @@ ToDo.controller('loginController', function($scope, loginService, $location, toa
       }
     });
   }
-
+  //function to get user password in case of forget password
   $scope.forgetPassword = function() {
     var message = loginService.service('POST', 'forgotpassword', $scope.user);
-
     message.then(function(response) {
       $scope.error = response.data.responseMessage;
     }, function(response) {
@@ -45,6 +41,7 @@ ToDo.controller('loginController', function($scope, loginService, $location, toa
     });
   }
 
+  /**function to apply new password in case of forgot*/
   $scope.resetpassword = function() {
     var path = $location.path();
     path = path.replace(path.charAt(0), '');

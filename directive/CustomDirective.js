@@ -1,29 +1,32 @@
 var ToDo = angular.module("ToDo");
 
+//NAVBAR DIRECTIVE
 ToDo.directive("toolBar", function() {
   return {
     templateUrl: 'template/NavBar.html'
   };
 });
 
+//SIDEBAR DIRECTIVE
 ToDo.directive("sideBar", function() {
   return {
     templateUrl: 'template/sideBar.html'
   };
 });
 
+//CARD ACTIONS LIKE REMIDER,COLOR SELECTION,ARCHIVE AND DELETE
 ToDo.directive("cardAction", function() {
   return {
     templateUrl: 'template/mdCardAction.html'
   };
 });
-
+//NEW NOT ACTION FRO UPDATE
 ToDo.directive("newNoteAction", function() {
   return {
     templateUrl: 'template/createNewNoteAction.html'
   };
 });
-
+//FILE SELECTION
 ToDo.directive("ngFileSelect", function(fileReader, $timeout) {
   return {
     scope: {

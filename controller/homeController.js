@@ -3,7 +3,7 @@ var ToDo = angular.module('ToDo')
 ToDo.controller('homeController', function($rootScope, $scope, fileReader, $location, $timeout, $mdSidenav, noteService, $mdDialog, mdcDateTimeDialog, toastr, $mdUtil, $filter, $interval, $state, Upload, $base64, $q) {
 
   $scope.toggleLeft = buildToggler('left');
-
+  /**function to toggle sidebar*/
   function buildToggler(navID) {
     return function() {
       $mdSidenav(navID).toggle();
@@ -11,6 +11,7 @@ ToDo.controller('homeController', function($rootScope, $scope, fileReader, $loca
   }
 
   var urls = [];
+  /**function to check url and respond acc to url data*/
   $scope.checkUlr = function(note) {
     var urlPattern = /(http|ftp|https):\/\/[\w-]+(\.[\w-]+)+([\w.,@?^=%&amp;:\/~+#-]*[\w@?^=%&amp;\/~+#-])?/gi;
     var url = note.body.match(urlPattern);
@@ -25,9 +26,7 @@ ToDo.controller('homeController', function($rootScope, $scope, fileReader, $loca
         note.url[i] = url[i];
         var getUrlData = noteService.getUrl(url[i]);
         getUrlData.then(function(response) {
-
           var responseData = response.data;
-
           link[note.size] = {
             urlTitle: responseData.urlTitle,
             urlImage: responseData.ulrImage,
@@ -45,7 +44,7 @@ ToDo.controller('homeController', function($rootScope, $scope, fileReader, $loca
 
   }
 
-  /*//////////////////////////////=====LIST/GRID VIEW======///////////////////////////// */
+  /**LIST/GRID VIEW */
   $scope.view = function() {
     var view = localStorage.getItem('view');
     if (view == 'list') {
@@ -55,9 +54,8 @@ ToDo.controller('homeController', function($rootScope, $scope, fileReader, $loca
     }
 
   }
-
+  /**display view according to list and grid selection*/
   $scope.displayView = function(type) {
-
     if (type == 'list') {
       $scope.view = '90';
       $scope.width = '100%';
@@ -75,7 +73,7 @@ ToDo.controller('homeController', function($rootScope, $scope, fileReader, $loca
     }
 
   }
-
+  /**function to check pin and unpin of notes*/
   $scope.pinStatus = false;
   $scope.pinUnpin = function() {
     if ($scope.pinStatus == false) {
@@ -85,7 +83,7 @@ ToDo.controller('homeController', function($rootScope, $scope, fileReader, $loca
     }
   }
 
-  /*//////////////////////////////=====REMINDER======///////////////////////////// */
+  /**function to display dialog for reminder selection*/
   $scope.displayDialog = function(note) {
     mdcDateTimeDialog.show({
         time: true
@@ -101,8 +99,7 @@ ToDo.controller('homeController', function($rootScope, $scope, fileReader, $loca
       });
   };
 
-  /*//////////////////////////////=====COLOR======///////////////////////////// */
-
+  /*ARRAY OF COLORS*/
   $scope.colors = [{
       color: '#fff',
       name: 'White'
@@ -156,12 +153,10 @@ ToDo.controller('homeController', function($rootScope, $scope, fileReader, $loca
   $scope.noteColor = function(newColor, oldColor) {
     $scope.color = newColor;
   }
-
   $scope.colorChanged = function(newColor, oldColor, note) {
     note.color = newColor;
     update(note);
   }
-
   var note = function() {
     $location.path('notes');
   }
@@ -171,6 +166,7 @@ ToDo.controller('homeController', function($rootScope, $scope, fileReader, $loca
     $timeout(getNotesActual, 1000);
   }
 
+  /**function to get all the notes with its label attached to it*/
   var getNotesActual = function() {
     var url = 'getnotes';
     var notes = noteService.service(url, 'GET', notes);
@@ -204,22 +200,18 @@ ToDo.controller('homeController', function($rootScope, $scope, fileReader, $loca
           }
         }
       }, 90000);
-
     }, function(response) {
       $scope.error = response.data.responseMessage;
       $location.path('login');
     });
   }
 
-  /*//////////////////////////////=====ADD NEW NOTE======///////////////////////////// */
+  /**function to add new note on submitting*/
 
   $scope.addNote = function(pinStatus) {
     $scope.note = {};
-
     $scope.note.title = document.getElementById("title").innerHTML;
-
     $scope.note.body = document.getElementById("body").innerHTML;
-
     var url = 'addnote';
     if ((document.getElementById("title").innerHTML == "" && document.getElementById("body").innerHTML == "")) {
       $scope.displayDiv = false;
@@ -234,14 +226,11 @@ ToDo.controller('homeController', function($rootScope, $scope, fileReader, $loca
       $scope.addImg = "";
 
       var notes = noteService.service(url, 'POST', $scope.note);
-
       notes.then(function(response) {
-
         document.getElementById("title").innerHTML = "";
         document.getElementById("body").innerHTML = "";
         $scope.color = '#fff';
         $scope.displayDiv = false;
-
         getNotes();
       }, function(response) {
         getNotes();
@@ -253,10 +242,8 @@ ToDo.controller('homeController', function($rootScope, $scope, fileReader, $loca
     }
   }
 
-  /*//////////////////////////////=====DELETE NOTE FOREVER======///////////////////////////// */
-
+  /**function calling restservice to delete the note forever*/
   $scope.deleteNoteForever = function(note) {
-
     var url = 'delete/' + note.noteId;
     var notes = noteService.service(url, 'DELETE', note);
     notes.then(function(response) {
@@ -273,7 +260,7 @@ ToDo.controller('homeController', function($rootScope, $scope, fileReader, $loca
     });
   }
 
-  /*//////////////////////////////=====RESTORE NOTE======///////////////////////////// */
+  /**function calling restservices to restore the notes*/
   $scope.restoreNote = function(note) {
     var url = 'updatestatus';
     var notes = noteService.update(url, 'POST', note.noteId, 'false', 'restore');
@@ -290,7 +277,7 @@ ToDo.controller('homeController', function($rootScope, $scope, fileReader, $loca
     });
   }
 
-  /*//////////////////////////////=====DELETE NOTE AND SAVE TO TRASH======///////////////////////////// */
+  /**function calling restservice to delete the note and send that note into trash*/
   $scope.deleteNote = function(note) {
     var url = 'updatestatus';
     var notes = noteService.update(url, 'POST', note.noteId, 'true', 'trash');
@@ -307,7 +294,7 @@ ToDo.controller('homeController', function($rootScope, $scope, fileReader, $loca
     });
   }
 
-  /*//////////////////////////////=====PIN NOTE======///////////////////////////// */
+  //function to pin a selected note
   $scope.pinned = function(note, status) {
     var url = 'updatestatus';
     var notes = noteService.update(url, 'POST', note.noteId, status, 'pinned');
@@ -318,8 +305,7 @@ ToDo.controller('homeController', function($rootScope, $scope, fileReader, $loca
     });
   }
 
-  /*//////////////////////////////=====ARCHIVE NOTE======///////////////////////////// */
-
+  //function to archive a selected note
   $scope.archive = function(note, status) {
     var url = 'updatestatus';
     var notes = noteService.update(url, 'POST', note.noteId, status, 'archive');
@@ -339,7 +325,7 @@ ToDo.controller('homeController', function($rootScope, $scope, fileReader, $loca
     $scope.displayDiv = false;
   }
 
-  /*//////////////////////////////=====Collaborators NOTE======///////////////////////////// */
+  /**function to add collaborators to a selected note*/
   $scope.collaborators = function(note, event) {
     $mdDialog.show({
       locals: {
@@ -395,7 +381,6 @@ ToDo.controller('homeController', function($rootScope, $scope, fileReader, $loca
   }
 
   /*//////////////////////////////=====UPDATE NOTE======///////////////////////////// */
-
   $scope.updateEditedNote = function(note, event) {
     // Show dialog box for edit a note
     $mdDialog.show({
@@ -571,12 +556,9 @@ ToDo.controller('homeController', function($rootScope, $scope, fileReader, $loca
     });
   };
 
-
-
   /*//////////////////////////////=====Make a Copy of  note======///////////////////////////// */
 
   $scope.makeCopy = function(note) {
-
     note.noteId = null;
     note.archive = false;
     note.pinned = false;
@@ -601,7 +583,6 @@ ToDo.controller('homeController', function($rootScope, $scope, fileReader, $loca
   }
 
   /*//////////////////////////////=====CHANGING COLOR ======///////////////////////////// */
-
   if ($state.current.name == 'home') {
     $scope.navBarColor = "#ffbb33";
     $scope.editable = true;
@@ -654,11 +635,7 @@ ToDo.controller('homeController', function($rootScope, $scope, fileReader, $loca
     $scope.searchResultNotes = arr;
   }
 
-
-
-
   /*===========================Create Label========================*/
-
   $scope.createLabel = function($event, user) {
     $mdDialog.show({
       locals: {
@@ -689,7 +666,6 @@ ToDo.controller('homeController', function($rootScope, $scope, fileReader, $loca
   }
 
   /*===========================Add Label to note========================*/
-
   $scope.labelToggle = function(note, label) {
     var index = -1;
     var i = 0;
@@ -699,7 +675,6 @@ ToDo.controller('homeController', function($rootScope, $scope, fileReader, $loca
         break;
       }
     }
-
     if (index == -1) {
       note.labels.push(label.labelId);
       update(note);
@@ -707,11 +682,9 @@ ToDo.controller('homeController', function($rootScope, $scope, fileReader, $loca
       note.labels.splice(index, 1);
       update(note);
     }
-
   }
 
   $scope.checkboxCheck = function(note, label) {
-
     var labels = note.labels;
     for (var i = 0; i < labels.length; i++) {
       if (labels[i] === label.labelId) {
