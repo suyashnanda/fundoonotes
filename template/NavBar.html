@@ -1,17 +1,15 @@
 <div>
   <md-toolbar ng-style="{'background-color':navBarColor};" style="position: fixed;">
-
     <div class="md-toolbar-tools">
-
       <md-button style="padding:10px; color: black" class="md-icon-button" ng-click="toggleLeft()">&#9776;</md-button>
       <div style="padding:10px">
         <h2 md-truncate style="weight:100px;color:black" ng-bind="title"></h2>
       </div>
-      <b><img src="images/search-icon.png" style="width:35px;" class="searchIcon"/></b>
       <div hide-xs flex>
         <div flex-gt-sm="85" class="searchbar">
           <md-autocomplete flex="50" md-items="" placeholder="Search Note" ui-sref="search">
           </md-autocomplete>
+          <!-- <b><img src="images/search-icon.png" style="width:35px;"/></b> -->
         </div>
       </div>
       <md-button style="min-width:25px;padding:5px" aria-label="Refresh" ng-click="refresh()">
@@ -32,15 +30,11 @@
       </div>
 
       <md-menu>
-        <md-button class="md-fab md-icon my-icon-button" aria-label="User" ng-click="$mdMenu.open($event)">
-
+        <md-button class="md-fab md-icon my-icon-button" aria-label="User" ng-click="$mdMenu.open($event)" style="width:50px;height:20px">
           <md-tooltip md-direction="bottom">{{user.email}}</md-tooltip>
-
           <img ng-src="{{user.picUrl}}" alt="{{user.name.charAt(0)}}" style=" height: 100%;width: 100%;">
         </md-button>
-
         <md-menu-content width="2" md-direction="bottom" style="overflow: hidden;">
-
           <div flex>
             <div layout="row" flex>
               <div layout="column">

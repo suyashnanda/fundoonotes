@@ -18,7 +18,7 @@
         <md-icon md-svg-src="images/share.svg" style="width:21px"></md-icon>
       </md-button>
 
-      <color-picker class="colorIcon" value="cardColor" color="color" options="colors" on-color-changed="colorChanged(newColor, oldColor,note)"></color-picker>
+      <color-picker class="colorIcon" color="color" options="colors" on-color-changed="onColorChange(newColor,note)"></color-picker>
 
       <md-button style="min-width:25px;padding:5px" aria-label="Add image" ng-click="openImageUploader(note)">
         <md-tooltip md-direction="bottom">Add image</md-tooltip>
@@ -43,15 +43,12 @@
         </md-button>
         <md-menu-content>
           <md-menu-item>
-
             <md-button ng-show="note.owner.email==user.email" class="primary" ng-click="deleteNote(note)">Delete</md-button>
             <md-button ng-show="note.owner.email!=user.email" class="primary" ng-click="removeMySelf(note,user)">RemoveMySelf</md-button>
-
           </md-menu-item>
           <md-menu-item>
             <md-button class="primary" ng-click="makeCopy(note)">Make Copy</md-button>
           </md-menu-item>
-
           <md-menu>
             <md-button class="primary" ng-click="$mdMenu.open($event)">Add Label</md-button>
             <md-menu-content>

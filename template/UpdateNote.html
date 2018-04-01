@@ -61,9 +61,7 @@
           <md-icon md-svg-src="images/share.svg" ng-click="" style="width:21px"></md-icon>
         </md-button>
 
-
-
-        <color-picker class="colorIcon" value="cardColor" color="color" options="colors" on-color-changed="colorChanged(newColor, oldColor,mdDialogData)"></color-picker>
+        <color-picker class="colorIcon" color="color" options="colors" on-color-changed="onColorChange(newColor,mdDialogData)"></color-picker>
 
         <md-button style="min-width:25px;padding:5px" aria-label="Add image" ng-click="openImageUploader(mdDialogData,'update')">
           <input ng-show="false" id="image" type='file' ng-model-instant ng-model="file" onchange="angular.element(this).scope().imageUpload(this)" />

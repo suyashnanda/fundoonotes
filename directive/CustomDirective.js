@@ -17,8 +17,19 @@ ToDo.directive("sideBar", function() {
 //CARD ACTIONS LIKE REMIDER,COLOR SELECTION,ARCHIVE AND DELETE
 ToDo.directive("cardAction", function() {
   return {
-    templateUrl: 'template/mdCardAction.html'
-    // controller: 'homeController',
+    restrict: 'E',
+    scope: {
+      colors: '=',
+      note: '=',
+      colorChanged: '&'
+    },
+    templateUrl: 'template/mdCardAction.html',
+    controller: function($scope) {
+      $scope.onColorChange = function(newColor, note) {
+        note.color = newColor;
+        $scope.colorChanged(note);
+      }
+    }
   };
 });
 //NEW NOT ACTION FRO UPDATE

@@ -25,29 +25,29 @@ ToDo.controller('homeController', function($rootScope, $scope, fileReader, $loca
       for (var i = 0; i < url.length; i++) {
         note.url[i] = url[i];
         noteService.getUrl(url[i])
-                      .then(function(response) {
-                          var responseData = response.data;
-                          var urlDomain , url = "http://www.sample.com";
-                          if (responseData.urlDomain) {
-                            urlDomain = responseData.urlDomain;
-                            url = note.url[noteService.searchStringInArray(urlDomain,note.url)];
-                          }else {
-                            let urlArrays = note.url.filter((link)=>{
-                                return noteService.searchStringInArray(link,note.link.map((obj)=>obj.url)) == -1;
-                            });
-                            urlDomain = url= urlArrays[0];
-                          }
-                          link[note.size] = {
-                            urlTitle: responseData.urlTitle,
-                            urlImage: responseData.ulrImage,
-                            urlDomain: urlDomain,
-                            url: url
-                          }
-                          note.link[note.size] = link[note.size];
-                          note.size = note.size + 1;
-                        }, function(response) {
+          .then(function(response) {
+            var responseData = response.data;
+            var urlDomain, url = "http://www.sample.com";
+            if (responseData.urlDomain) {
+              urlDomain = responseData.urlDomain;
+              url = note.url[noteService.searchStringInArray(urlDomain, note.url)];
+            } else {
+              let urlArrays = note.url.filter((link) => {
+                return noteService.searchStringInArray(link, note.link.map((obj) => obj.url)) == -1;
+              });
+              urlDomain = url = urlArrays[0];
+            }
+            link[note.size] = {
+              urlTitle: responseData.urlTitle,
+              urlImage: responseData.ulrImage,
+              urlDomain: urlDomain,
+              url: url
+            }
+            note.link[note.size] = link[note.size];
+            note.size = note.size + 1;
+          }, function(response) {
 
-                        })
+          })
       }
     }
 
@@ -107,69 +107,22 @@ ToDo.controller('homeController', function($rootScope, $scope, fileReader, $loca
         });
       });
   };
-// $scope.color = '#FF8A80';
+
   /*ARRAY OF COLORS*/
-  $scope.colors = [{
-      color: '#fff',
-      name: 'White'
-    },
-    {
-      color: '#ff8a80',
-      name: 'Red'
-    },
-    {
-      color: '#ffd180',
-      name: 'Orange'
-    },
-    {
-      color: '#ffff8d',
-      name: 'Yellow'
-    },
-    {
-      color: '#ccff90',
-      name: 'Green'
-    },
-    {
-      color: '#a7ffeb',
-      name: 'Teal'
-    },
-    {
-      color: '#80d8ff',
-      name: 'Blue'
-    },
-    {
-      color: '#82b1ff',
-      name: 'Dark Blue'
-    },
-    {
-      color: '#b388ff',
-      name: 'Purple'
-    },
-    {
-      color: '#f8bbd0',
-      name: 'Pink'
-    },
-    {
-      color: '#d7ccc8',
-      name: 'Brown'
-    },
-    {
-      color: '#cfd8dc',
-      name: 'Grey'
-    }
-  ];
+  $scope.colors = ['transparent', '#FF8A80', '#FFD180', '#FFFF8D', '#CFD8DC', '#80D8FF', '#A7FFEB', '#CCFF90'];
 
   $scope.noteColor = function(newColor, oldColor) {
     $scope.color = newColor;
   }
-  $scope.colorChanged = function(newColor, oldColor, note) {
-    note.color = newColor;
+  /**set new color to the notes*/
+  $scope.newColor="";
+  $scope.colorChanged = function(note) {
     update(note);
   }
+
   var note = function() {
     $location.path('notes');
   }
-
   /*//////////////////////////////=====GET ALL NOTES======///////////////////////////// */
   var getNotes = function() {
     $timeout(getNotesActual, 1000);
@@ -235,19 +188,19 @@ ToDo.controller('homeController', function($rootScope, $scope, fileReader, $loca
       $scope.addImg = "";
 
       noteService.service(url, 'POST', $scope.note)
-                    .then(function(response) {
-                        document.getElementById("title").innerHTML = "";
-                        document.getElementById("body").innerHTML = "";
-                        $scope.color = '#fff';
-                        $scope.displayDiv = false;
-                        getNotes();
-                      }, function(response) {
-                        getNotes();
-                        $scope.error = response.data.message;
-                        toastr.success($scope.error, {
-                          timeOut: 1000
-                        });
-                    });
+        .then(function(response) {
+          document.getElementById("title").innerHTML = "";
+          document.getElementById("body").innerHTML = "";
+          $scope.color = '#fff';
+          $scope.displayDiv = false;
+          getNotes();
+        }, function(response) {
+          getNotes();
+          $scope.error = response.data.message;
+          toastr.success($scope.error, {
+            timeOut: 1000
+          });
+        });
     }
   }
 
@@ -389,7 +342,7 @@ ToDo.controller('homeController', function($rootScope, $scope, fileReader, $loca
     })
   }
 
-  /*//////////////////////////////=====UPDATE NOTE======///////////////////////////// */
+  /**function to call when click on notes to update it*/
   $scope.updateEditedNote = function(note, event) {
     // Show dialog box for edit a note
     $mdDialog.show({
@@ -421,6 +374,12 @@ ToDo.controller('homeController', function($rootScope, $scope, fileReader, $loca
     $scope.mdDialogData = dataToPass;
     $scope.colors = colors;
     $scope.user = user;
+
+    $scope.onColorChange=function(newColor,mdDialogData){
+      mdDialogData.color = newColor;
+      update(mdDialogData);
+    }
+
     /*=========================Remove Image=============*/
     $scope.removeImage = function(mdDialogData) {
       mdDialogData.image = null;
@@ -434,7 +393,6 @@ ToDo.controller('homeController', function($rootScope, $scope, fileReader, $loca
       update(dataToPass);
       $mdDialog.hide();
     }
-
     $scope.pinned = pin;
     $scope.openImageUploader = changeImage;
     $scope.removeLabel = deletelebel;
@@ -525,7 +483,8 @@ ToDo.controller('homeController', function($rootScope, $scope, fileReader, $loca
 
 
   $scope.imageIsLoaded = function(e) {
-    $scope.$apply(function() {
+    // setTimeout(function(){
+    // $scope.$apply(function() {
       $scope.stepsModel.push(e.target.result);
       var imageSrc = e.target.result;
       if ($scope.type === 'input') {
@@ -540,7 +499,6 @@ ToDo.controller('homeController', function($rootScope, $scope, fileReader, $loca
         uploadImage.then(function(response) {
           $state.reload();
         }, function(reponse) {
-
         })
       } else if ($scope.type === 'update') {
         var noteId = $scope.changeIamge.noteId;
@@ -559,10 +517,10 @@ ToDo.controller('homeController', function($rootScope, $scope, fileReader, $loca
         uploadImage.then(function(response) {
           getNotes();
         }, function(reponse) {
-
         })
       }
-    });
+    // });
+    // });
   };
 
   /*//////////////////////////////=====Make a Copy of  note======///////////////////////////// */
