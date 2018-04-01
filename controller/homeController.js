@@ -26,16 +26,15 @@ ToDo.controller('homeController', function($rootScope, $scope, fileReader, $loca
         note.url[i] = url[i];
         noteService.getUrl(url[i])
                       .then(function(response) {
+                        console.log(note.tempUrls);
                           var responseData = response.data;
-                          var urlDomain , url = "http://www.sample.com";
+                          var urlDomain , url;
                           if (responseData.urlDomain) {
-                            urlDomain = responseData.urlDomain;
-                            url = note.url[noteService.searchStringInArray(urlDomain,note.url)];
+                              urlDomain = responseData.urlDomain;
+                              url = note.url[noteService.searchStringInArray(urlDomain,note.url)];
                           }else {
-                            let urlArrays = note.url.filter((link)=>{
-                                return noteService.searchStringInArray(link,note.link.map((obj)=>obj.url)) == -1;
-                            });
-                            urlDomain = url= urlArrays[0];
+                              urlDomain = responseData.urlDomain || response.config.headers.url;
+                              url = note.url[noteService.searchStringInArray(urlDomain,note.url)];
                           }
                           link[note.size] = {
                             urlTitle: responseData.urlTitle,
@@ -107,7 +106,7 @@ ToDo.controller('homeController', function($rootScope, $scope, fileReader, $loca
         });
       });
   };
-// $scope.color = '#FF8A80';
+
   /*ARRAY OF COLORS*/
   $scope.colors = [{
       color: '#fff',
@@ -271,7 +270,7 @@ ToDo.controller('homeController', function($rootScope, $scope, fileReader, $loca
 
   /**function calling restservices to restore the notes*/
   $scope.restoreNote = function(note) {
-    var url = 'updatestatus';
+    var url = 'updateStatus';
     var notes = noteService.update(url, 'POST', note.noteId, 'false', 'restore');
     notes.then(function(response) {
       getNotes();
@@ -288,7 +287,7 @@ ToDo.controller('homeController', function($rootScope, $scope, fileReader, $loca
 
   /**function calling restservice to delete the note and send that note into trash*/
   $scope.deleteNote = function(note) {
-    var url = 'updatestatus';
+    var url = 'updateStatus';
     var notes = noteService.update(url, 'POST', note.noteId, 'true', 'trash');
     notes.then(function(response) {
       getNotes();
@@ -305,7 +304,7 @@ ToDo.controller('homeController', function($rootScope, $scope, fileReader, $loca
 
   //function to pin a selected note
   $scope.pinned = function(note, status) {
-    var url = 'updatestatus';
+    var url = 'updateStatus';
     var notes = noteService.update(url, 'POST', note.noteId, status, 'pinned');
     notes.then(function(response) {
       getNotes();
@@ -316,7 +315,7 @@ ToDo.controller('homeController', function($rootScope, $scope, fileReader, $loca
 
   //function to archive a selected note
   $scope.archive = function(note, status) {
-    var url = 'updatestatus';
+    var url = 'updateStatus';
     var notes = noteService.update(url, 'POST', note.noteId, status, 'archive');
     notes.then(function(response) {
       getNotes();
