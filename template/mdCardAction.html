@@ -55,11 +55,11 @@
           <md-menu>
             <md-button class="primary" ng-click="$mdMenu.open($event)">Add Label</md-button>
             <md-menu-content>
-              <md-menu-item>
-                <md-checkbox ng-checked="checkboxCheck(note, label)" ng-click="labelToggle(note,label)" ng-repeat="label in labels">
+              <md-menu-item  ng-repeat="label in labels">
+                <md-checkbox ng-checked="checkboxCheck(note, label)" ng-click="labelToggle(note,label)">
                   {{label.name}}
                 </md-checkbox>
-              </md-menu-item><br>
+              </md-menu-item>
             </md-menu-content>
           </md-menu>
         </md-menu-content>

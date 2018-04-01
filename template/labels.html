@@ -228,20 +228,8 @@
 
 
 							<span layout="column" ng-show="note.link.length" ng-style="{ 'background-color': '#fff'}" flex ng-init="checkUrl(note)">
-     				<md-card flex>
-     				<div layout="row" flex ng-repeat="link in note.link" >
-
-     					<img class"linkimage" ng-src="{{link.urlImage}}" width="50px" height="50px"/>
-     					<span class="linkStyle">{{link.urlTitle}}<br>
-
-     						{{link.urlDomain}}
-     						<a href="{{link.url}}" target="_blank"><img class="gotoicon" ng-src="images/gotolink.svg" style="width:21px"></a>
-     					</span>
-
-				</div>
-				<md-divider></md-divider>
-				</md-card>
-				</span>
+								<note-link links="note.link"></note-link>
+							</span>
 
 
 
@@ -368,19 +356,8 @@
 
 
 				<span layout="column" ng-show="note.link.length" ng-style="{ 'background-color': '#fff'}" flex ng-init="checkUrl(note)">
-     				<md-card flex>
-     				<div layout="row" flex ng-repeat="link in note.link" >
-
-     					<img class"linkimage" ng-src="{{link.urlImage}}" width="50px" height="50px"/>
-     					<span class="linkStyle">{{link.urlTitle}}<br>
-
-     						{{link.urlDomain}}
-     		<a href="{{link.url}}" target="_blank"><img class="gotoicon" ng-src="images/gotolink.svg" style="width:21px"></a>
-     					</span>
-		</div>
-		<md-divider></md-divider>
-		</md-card>
-		</span>
+					<note-link links="note.link"></note-link>		
+				</span>
 
 		</md-card>
 	</div>

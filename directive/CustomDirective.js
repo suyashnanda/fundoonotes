@@ -14,6 +14,16 @@ ToDo.directive("sideBar", function() {
   };
 });
 
+// Directive to display Links
+ToDo.directive("noteLink", function() {
+  return {
+    templateUrl: 'template/note.link.html',
+    scope:{
+      links : "="
+    }
+  };
+});
+
 //CARD ACTIONS LIKE REMIDER,COLOR SELECTION,ARCHIVE AND DELETE
 ToDo.directive("cardAction", function() {
   return {

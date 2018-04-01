@@ -1,6 +1,8 @@
 var ToDo = angular.module('ToDo')
 
-ToDo.controller('homeController', function($rootScope, $scope, fileReader, $location, $timeout, $mdSidenav, noteService, $mdDialog, mdcDateTimeDialog, toastr, $mdUtil, $filter, $interval, $state, Upload, $base64, $q) {
+ToDo.controller('homeController', function($rootScope, $scope, fileReader,
+          $location, $timeout, $mdSidenav, noteService, $mdDialog, mdcDateTimeDialog,
+         toastr, $mdUtil, $filter, $interval, $state, Upload, $base64, $q,labelService) {
 
   $scope.toggleLeft = buildToggler('left');
   /**function to toggle sidebar*/
@@ -45,7 +47,7 @@ ToDo.controller('homeController', function($rootScope, $scope, fileReader, $loca
                           note.size = note.size + 1;
                         }, function(response) {
 
-                        })
+                      })
       }
     }
 
@@ -396,6 +398,7 @@ ToDo.controller('homeController', function($rootScope, $scope, fileReader, $loca
         pin: $scope.pinned,
         changeImage: $scope.openImageUploader,
         deletelebel: $scope.removeLabel,
+        labels :$scope.labels,
         collaborator: $scope.collaborators,
         colors: $scope.colors,
         changeColor: $scope.colorChanged,
@@ -415,10 +418,14 @@ ToDo.controller('homeController', function($rootScope, $scope, fileReader, $loca
     });
   }
 
-  function mdDialogController($scope, $state, dataToPass, pin, changeImage, deletelebel, collaborator, colors, changeColor, modelDeleteNote, modelMakeCopy, user, labelAdd, checkbox, mdArchive) {
+  function mdDialogController($scope, $state, dataToPass, pin, changeImage, deletelebel,
+                    collaborator, colors,labels, changeColor, modelDeleteNote, modelMakeCopy,
+                    user, labelAdd, checkbox, mdArchive,labelService) {
     $scope.mdDialogData = dataToPass;
     $scope.colors = colors;
     $scope.user = user;
+    labelService.labels = labels;
+    // labelService.initiateLabel();
     /*=========================Remove Image=============*/
     $scope.removeImage = function(mdDialogData) {
       mdDialogData.image = null;
@@ -432,7 +439,7 @@ ToDo.controller('homeController', function($rootScope, $scope, fileReader, $loca
       update(dataToPass);
       $mdDialog.hide();
     }
-
+    $scope.getLabelName = labelService.getLabelName;
     $scope.pinned = pin;
     $scope.openImageUploader = changeImage;
     $scope.removeLabel = deletelebel;
@@ -466,13 +473,12 @@ ToDo.controller('homeController', function($rootScope, $scope, fileReader, $loca
 
   /*/////////////////////=============Get All Labels====================///////////////////*/
   var getLabels = function() {
-    $timeout(getLabelsActual, 1000);
+    $timeout(getLabelsActual, 500);
   }
   var getLabelsActual = function() {
-    var url = 'getAllLabel';
-    var labels = noteService.service(url, 'GET');
-    labels.then(function(response) {
+    labelService.initiateLabel().then(function(response) {
       $scope.labels = response.data;
+      labelService.labels = response.data;
     }, function(response) {
       console.log("Error", response.responseMessage);
     })
@@ -667,7 +673,7 @@ ToDo.controller('homeController', function($rootScope, $scope, fileReader, $loca
       var addLabel = noteService.service(url, 'POST', $scope.label)
       addLabel.then(function(response) {
         $mdDialog.hide();
-        $state.reload();
+        $timeout(getLabels);
       }, function(response) {})
     }
   }
@@ -704,21 +710,21 @@ ToDo.controller('homeController', function($rootScope, $scope, fileReader, $loca
   /*==========================DELETE LABEL==============================*/
 
   $scope.deleteLabel = function(label) {
-    var url = 'deletelabel';
+    var url = 'deleteLabel';
     var deletelabel = noteService.label(url, 'POST', label);
     deletelabel.then(function(response) {
-      $state.reload();
-      getLabels();
+      $timeout(getLabels);
     }, function(response) {})
   }
 
-  $scope.getLabelName = function(label) {
-    for (var i = 0; i < $scope.labels.length; i++) {
-      if ($scope.labels[i].labelId == label) {
-        return $scope.labels[i].name;
-      }
-    }
-  }
+  $scope.getLabelName = labelService.getLabelName;
+  // $scope.getLabelName = function(label) {
+  //   for (var i = 0; i < $scope.labels.length; i++) {
+  //     if ($scope.labels[i].labelId == label) {
+  //       return $scope.labels[i].name;
+  //     }
+  //   }
+  // }
 
   /*==========================REMOVE LABEL==============================*/
 
