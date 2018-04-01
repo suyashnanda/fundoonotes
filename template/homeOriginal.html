@@ -14,7 +14,6 @@
         <md-content layout-align="center center" flex="66" layout-gt-xs style="overflow: visible;">
           <div flex="33">
             <md-card style="background-color: {{color}}">
-
               <md-card-title>
                 <md-card-title-text>
                   <div aria-label="unpin note">
@@ -37,10 +36,9 @@
               <md-card-actions>
                 <md-panel>
                   <p ng-show="displayDiv" class="icon">
-                    <!--  <md-button style="min-width:25px";> -->
                     <md-menu>
                       <md-button style="min-width:25px;padding:5px" ng-click="$mdMenu.open($event)" aria-label="Remender">
-                        <md-tooltip md-direction="bottom">Remender</md-tooltip>
+                        <md-tooltip md-direction="bottom">Remainder</md-tooltip>
                         <img src="images/remender.svg">
                       </md-button>
                       <md-menu-content>
@@ -53,16 +51,8 @@
                       <md-icon md-svg-src="images/share.svg" ng-click="" style="width:21px"></md-icon>
                     </md-button>
 
-                    <!-- <md-button style="min-width:25px;padding:5px" aria-label="Change Color">
-	        			<md-tooltip md-direction="bottom">Change Color</md-tooltip> -->
                     <color-picker class="colorIcon" value="cardColor" color="color" options="colors" on-color-changed="noteColor(newColor, oldColor)"></color-picker>
-
-
-                    <!-- <md-icon md-svg-src="images/color.svg" ng-click="" style="width:21px"></md-icon>
-	        			</md-button> -->
-
                     <md-button style="min-width:25px;padding:5px" aria-label="Add Image" ng-click="openImageUploader(note)">
-
                       <input ng-show="false" id="image" type='file' ng-model-instant ng-model="file" onchange="angular.element(this).scope().imageUpload(this)" />
 
                       <md-tooltip md-direction="bottom">Add Image</md-tooltip>
@@ -154,26 +144,18 @@
                         <md-icon md-svg-src="images/share.svg" ng-click="" style="width:21px"></md-icon>
                       </md-button>
 
-
-
                       <color-picker class="colorIcon" value="cardColor" color="color" options="colors" on-color-changed="colorChanged(newColor, oldColor,note)"></color-picker>
 
-                      <!-- <md-button style="min-width:25px;padding:5px" aria-label="Change color">
-	        			<md-tooltip md-direction="bottom">Change color</md-tooltip>
-	        				<md-icon md-svg-src="images/color.svg" ng-click="" style="width:21px"></md-icon>
-	        			</md-button>
-	        			 -->
                       <md-button style="min-width:25px;padding:5px" aria-label="Add image" ng-click="openImageUploader(note)">
                         <md-tooltip md-direction="bottom">Add image</md-tooltip>
                         <md-icon md-svg-src="images/uploadImg.svg" style="width:21px;"></md-icon>
-
                       </md-button>
 
                       <md-button style="min-width:25px;padding:5px" ng-click="archive(note,true)" aria-label="Archive">
                         <md-tooltip md-direction="bottom">Archive</md-tooltip>
                         <md-icon md-svg-src="images/archive.svg" aria-lable="archive note"></md-icon>
                       </md-button>
-                      <!--  <img ng-src="images/menu.svg" style="width:21px"> -->
+
                       <md-menu>
                         <md-button style="min-width:25px;padding:5px" ng-click="$mdMenu.open($event)" aria-label="More">
                           <md-tooltip md-direction="bottom">More</md-tooltip>
@@ -194,13 +176,9 @@
                     </p>
                   </md-panel>
                 </md-card-actions>
-
               </md-card>
             </div>
-
           </div>
-
-
         </div>
 
         <h4>Others</h4><br>
@@ -235,7 +213,6 @@
               </p>
               <md-card-actions>
                 <p id="lastDiv" class="icon">
-                  <!--  <md-button style="min-width:25px";> -->
                   <md-menu>
                     <md-button style="min-width:25px;padding:5px" ng-click="$mdMenu.open($event)" area-label="Remender">
                       <md-tooltip md-direction="bottom">Reminder</md-tooltip>
@@ -247,21 +224,12 @@
                       </md-menu-item>
                     </md-menu-content>
                   </md-menu>
-                  <!--   </md-button> -->
-
                   <md-button style="min-width:25px;padding:5px" aria-label="Share">
                     <md-tooltip md-direction="bottom">Share</md-tooltip>
                     <md-icon md-svg-src="images/share.svg" ng-click="" style="width:21px"></md-icon>
                   </md-button>
 
-                  <!-- <md-button style="min-width:25px;padding:5px" aria-label="Change color"> -->
-
-                  <!-- 	        			<md-tooltip md-direction="bottom">Change color</md-tooltip>
- -->
                   <color-picker class="colorIcon" value="cardColor" color="color" options="colors" on-color-changed="colorChanged(newColor, oldColor,note)"></color-picker>
-
-
-                  <!-- </md-button> -->
 
                   <md-button style="min-width:25px;padding:5px" aria-label="Add image" ng-click="openImageUploader(note)">
                     <md-tooltip md-direction="bottom">Add image</md-tooltip>
@@ -272,7 +240,6 @@
                     <md-tooltip md-direction="bottom">Archive</md-tooltip>
                     <md-icon md-svg-src="images/archive.svg" aria-lable="archive note"></md-icon>
                   </md-button>
-                  <!--  <img ng-src="images/menu.svg" style="width:21px"> -->
                   <md-menu>
                     <md-button style="min-width:25px;padding:5px" ng-click="$mdMenu.open($event)" aria-label="More">
                       <md-tooltip md-direction="bottom">More</md-tooltip>

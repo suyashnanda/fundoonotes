@@ -6,9 +6,10 @@
       <md-button style="padding:10px; color: black" class="md-icon-button" ng-click="toggleLeft()">&#9776;</md-button>
       <div style="padding:10px">
         <h2 md-truncate style="weight:100px;color:black" ng-bind="title"></h2>
-      </div><b><img src="images/search-icon.png" style="width:35px;"/></b>
+      </div>
+      <b><img src="images/search-icon.png" style="width:35px;" class="searchIcon"/></b>
       <div hide-xs flex>
-        <div flex-gt-sm="85">
+        <div flex-gt-sm="85" class="searchbar">
           <md-autocomplete flex="50" md-items="" placeholder="Search Note" ui-sref="search">
           </md-autocomplete>
         </div>

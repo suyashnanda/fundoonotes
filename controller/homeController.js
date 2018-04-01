@@ -98,7 +98,7 @@ ToDo.controller('homeController', function($rootScope, $scope, fileReader, $loca
         });
       });
   };
-
+// $scope.color = '#FF8A80';
   /*ARRAY OF COLORS*/
   $scope.colors = [{
       color: '#fff',

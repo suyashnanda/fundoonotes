@@ -1,43 +1,64 @@
 <md-sidenav class="md-sidenav-left" md-component-id="left" md-whiteframe="4">
-  <!-- <md-sidenav class="md-sidenav-left" style=" margin-top:50px;width:10em" md-component-id="left" md-is-locked-open="dash.openInfo">
- -->
+
   <md-list>
-
     <md-list-item ng-show="user.role=='admin'">
-
       <md-button ng-click="adminDashboard()" aria-label="AdminPanel" flex layout="row" layout-align="start center">
         <img flex-offset="15" ng-src="images/dashboard.svg">
         <span flex-offset="15">Admin Dashboard</span>
       </md-button>
     </md-list-item>
 
+    <!-- NOTES -->
     <md-list-item ui-sref="home">
-      Notes
+      <i class="material-icons">note</i>
+      <div class="sideText">
+        Notes
+      </div>
     </md-list-item>
+    <md-divider></md-divider>
+
+    <!-- ARCHIVE -->
     <md-list-item ui-sref="archive">
-      Archives
+      <i class="material-icons">archive</i>
+      <div class="sideText">
+        Archives
+      </div>
     </md-list-item>
+    <md-divider></md-divider>
+
+    <!-- REMAINDER -->
     <md-list-item ui-sref="reminder">
-      Reminders
+      <i class="material-icons">alarm_add</i>
+      <div class="sideText">
+        Reminders
+      </div>
     </md-list-item>
+    <md-divider></md-divider>
 
-    <p> Labels</p>
-    <div ng-repeat="label in labels">
+    <!-- LABELS -->
+    <p style="font-weight:bold;margin-left:20px">Labels</p>
+    <div ng-repeat="label in labels" style="margin-left:25%">
       <span ng-click="labelState(label)">{{label.name}}</span>
-
       <md-icon md-svg-src="images/clear.svg" ng-click="deleteLabel(label)"></md-icon>
-
     </div>
+
+    <!-- CREATE NEW LABEL -->
     <md-list-item ng-click="createLabel($event,user)">
-      Create new label
+      <i class="material-icons">label</i>
+      <div class="sideText">
+        Create new label
+      </div>
+    </md-list-item>
+    <md-divider></md-divider>
     </md-list-item>
 
-    </md-list-item>
+    <!-- TRASH -->
     <md-list-item ui-sref="trash">
-      Trash
-
+      <i class="material-icons">delete</i>
+      <div class="sideText">
+        Trash
+      </div>
     </md-list-item>
-
+    <md-divider></md-divider>
   </md-list>
-
 </md-sidenav>

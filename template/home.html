@@ -27,10 +27,8 @@
 							<div>
 								<div contenteditable="true" name="body" strip-br="true" ng-model="note.body" ng-show="true" id="body" placeholder="Take a note..." ng-click="show()" style="width:500px;border:0px;outline:0px"></div>
 							</div>
-
 						</md-card-title-text>
 					</md-card-title>
-
 					<new-note-action></new-note-action>
 				</md-card>
 				<div flex="15"></div>
@@ -59,7 +57,6 @@
 									<div>
 										<div ng-click="updateEditedNote(note,$event)" ng-bind-html="note.body" ng-show="true" id="body" style="word-break: break-all;border:0px;outline:0px">{{note.body}}</div>
 									</div>
-
 								</md-card-title-text>
 							</md-card-title>
 
@@ -77,11 +74,10 @@
 	   				  <img ng-src="{{user.picUrl}}" class="collabIcon">
 	     		</span>
 							</div>
-
+							<!-- CARD ACTION DIRECTIVE -->
 							<card-action></card-action>
-
+							
 							<md-divider></md-divider>
-
 							<span layout="column" ng-show="note.link.length" ng-style="{ 'background-color': '#fff'}" flex ng-init="checkUlr(note)">
      				<md-card flex>
      				<div layout="row" flex ng-repeat="link in note.link" >
@@ -138,7 +134,10 @@
 					<p class="lastDive" ng-if="note.reminder" style="font-size:10px;padding:8px">Reminder : {{note.reminder | date:'medium'}}
 						<md-icon md-svg-src="images/delete.svg" ng-click="deleteRemender(note)" style="width:21px;float:right;margin-top:-13px"></md-icon>
 					</p>
+
+					<!-- CARD ACTION DIRECTIVE -->
 					<card-action></card-action>
+
 					<md-divider></md-divider>
 					<span layout="column" ng-show="note.link.length" ng-style="{ 'background-color': '#fff'}" flex ng-init="checkUlr(note)">
      				<md-card flex>

@@ -1,126 +1,55 @@
-.card{
-	width:100%;
+.card {
+  width: 100%;
 }
 
-/* html,body,.md-content {
-      background-color: rgba(205, 205, 205, 0.45);
-}
-
-md-backdrop.md-sidenav-backdrop {
-    z-index: -1;
-}
-#home-div{
-	background-color: rgba(0,0,0,.2);
-}
-
-md-content{
-	display: inline;
-} */
-
-[contenteditable=true]:empty:before{
+[contenteditable=true]:empty:before {
   content: attr(placeholder);
   display: block;
   color: grey;
 }
 
-
-#lastDiv,#colorpannel{
-	visibility: hidden;
+#lastDiv, #colorpannel {
+  visibility: hidden;
 }
 
-#float:hover #lastDiv,#colorpannel{
-	visibility: visible;
+#float:hover #lastDiv, #colorpannel {
+  visibility: visible;
 }
 
-
-#pinIcon{
-	visibility: hidden;
+#pinIcon {
+  visibility: hidden;
 }
 
-#float:hover #pinIcon{
-	visibility: visible;
+#float:hover #pinIcon {
+  visibility: visible;
 }
 
-#float:hover
-{
-	box-shadow: 6px 6px 3px 1px #0A0A0A;
+#float:hover {
+  box-shadow: 2px 2px 2px 2px #cbcfd6;
 }
 
-/* .homeCard{
-	 
-	     margin-left:12%; 
-	     margin-right:20%;
-	     margin-top:30px;
+.flex-30, .layout-row>.flex-30 {
+  max-width: 291px;
 }
 
-.md-headline{
-	     margin: 3px; 
-         font-size:19px; 
-         line-height: 27px;
-
+#sideNav a {
+  color: black;
 }
 
-.md-block{
-	     padding: 0px;
-	     margin: 5px 0;
+#icon {
+  display: block;
 }
 
-.homeInput{
-	     width: 500px;
-         background-color: rgb(250, 250, 250); 
-         outline: none
-        
-}
-.homeTitle{
-         padding-top:0px;
-         padding-right:10px;
-  		 padding-bottom:0px;
-         padding-left:10px
+.colorIcon {
+  border: none;
+  display: inline-block;
+  vertical-align: middle;
 }
 
-.createNote{
-         background-color: rgb(250, 250, 250); 
-         outline: none
-}
-#description{
-        width: 500px;
+.update {
+  outline: none;
 }
 
-.mdButton{
-	    min-width: 10px;
-} */
-
-
-.flex-30, .layout-row>.flex-30
-{
-	max-width: 291px;
+.tool {
+  z-index: 1000;
 }
-
-
-#sideNav a{
-	color: black;
-}
-
-#icon{
-	display: block;
-	
-}
-
-.colorIcon{
-	border: none;
-	display: inline-block;
-	vertical-align: middle;
-	
-}
-
-.update{
-	    outline: none;
-}
-
-
-.tool{
-	z-index: 1000;
-}
-
-
-

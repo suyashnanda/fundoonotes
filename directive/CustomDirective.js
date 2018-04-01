@@ -18,6 +18,7 @@ ToDo.directive("sideBar", function() {
 ToDo.directive("cardAction", function() {
   return {
     templateUrl: 'template/mdCardAction.html'
+    // controller: 'homeController',
   };
 });
 //NEW NOT ACTION FRO UPDATE
