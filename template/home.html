@@ -76,9 +76,9 @@
 							</div>
 							<!-- CARD ACTION DIRECTIVE -->
 							<card-action></card-action>
-							
+
 							<md-divider></md-divider>
-							<span layout="column" ng-show="note.link.length" ng-style="{ 'background-color': '#fff'}" flex ng-init="checkUlr(note)">
+							<span layout="column" ng-show="note.link.length" ng-style="{ 'background-color': '#fff'}" flex ng-init="checkUrl(note)">
      				<md-card flex>
      				<div layout="row" flex ng-repeat="link in note.link" >
      					<img class"linkimage" ng-src="{{link.urlImage}}" width="50px" height="50px"/>
@@ -139,7 +139,7 @@
 					<card-action></card-action>
 
 					<md-divider></md-divider>
-					<span layout="column" ng-show="note.link.length" ng-style="{ 'background-color': '#fff'}" flex ng-init="checkUlr(note)">
+					<span layout="column" ng-show="note.link.length" ng-style="{ 'background-color': '#fff'}" flex ng-init="checkUrl(note)">
      				<md-card flex style="padding-bottom:10px">
      				<div layout="row" flex ng-repeat="link in note.link" >
 

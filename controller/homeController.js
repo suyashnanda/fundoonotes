@@ -12,7 +12,7 @@ ToDo.controller('homeController', function($rootScope, $scope, fileReader, $loca
 
   var urls = [];
   /**function to check url and respond acc to url data*/
-  $scope.checkUlr = function(note) {
+  $scope.checkUrl = function(note) {
     var urlPattern = /(http|ftp|https):\/\/[\w-]+(\.[\w-]+)+([\w.,@?^=%&amp;:\/~+#-]*[\w@?^=%&amp;\/~+#-])?/gi;
     var url = note.body.match(urlPattern);
     var link = [];
@@ -26,7 +26,6 @@ ToDo.controller('homeController', function($rootScope, $scope, fileReader, $loca
         note.url[i] = url[i];
         noteService.getUrl(url[i])
                       .then(function(response) {
-                        console.log(note.tempUrls);
                           var responseData = response.data;
                           var urlDomain , url;
                           if (responseData.urlDomain) {
