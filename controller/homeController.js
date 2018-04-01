@@ -24,21 +24,30 @@ ToDo.controller('homeController', function($rootScope, $scope, fileReader, $loca
     if ((url != null || url != undefined) && note.size < url.length) {
       for (var i = 0; i < url.length; i++) {
         note.url[i] = url[i];
-        var getUrlData = noteService.getUrl(url[i]);
-        getUrlData.then(function(response) {
-          var responseData = response.data;
-          link[note.size] = {
-            urlTitle: responseData.urlTitle,
-            urlImage: responseData.ulrImage,
-            urlDomain: responseData.urlDomain,
-            url: note.url[note.size]
-          }
-          note.link[note.size] = link[note.size];
-          note.size = note.size + 1;
+        noteService.getUrl(url[i])
+                      .then(function(response) {
+                          var responseData = response.data;
+                          var urlDomain , url = "http://www.sample.com";
+                          if (responseData.urlDomain) {
+                            urlDomain = responseData.urlDomain;
+                            url = note.url[noteService.searchStringInArray(urlDomain,note.url)];
+                          }else {
+                            let urlArrays = note.url.filter((link)=>{
+                                return noteService.searchStringInArray(link,note.link.map((obj)=>obj.url)) == -1;
+                            });
+                            urlDomain = url= urlArrays[0];
+                          }
+                          link[note.size] = {
+                            urlTitle: responseData.urlTitle,
+                            urlImage: responseData.ulrImage,
+                            urlDomain: urlDomain,
+                            url: url
+                          }
+                          note.link[note.size] = link[note.size];
+                          note.size = note.size + 1;
+                        }, function(response) {
 
-        }, function(response) {
-
-        })
+                        })
       }
     }
 
@@ -212,7 +221,7 @@ ToDo.controller('homeController', function($rootScope, $scope, fileReader, $loca
     $scope.note = {};
     $scope.note.title = document.getElementById("title").innerHTML;
     $scope.note.body = document.getElementById("body").innerHTML;
-    var url = 'addnote';
+    var url = 'addNote';
     if ((document.getElementById("title").innerHTML == "" && document.getElementById("body").innerHTML == "")) {
       $scope.displayDiv = false;
       $scope.imageSrc = "";
@@ -225,20 +234,20 @@ ToDo.controller('homeController', function($rootScope, $scope, fileReader, $loca
       $scope.imageSrc = "";
       $scope.addImg = "";
 
-      var notes = noteService.service(url, 'POST', $scope.note);
-      notes.then(function(response) {
-        document.getElementById("title").innerHTML = "";
-        document.getElementById("body").innerHTML = "";
-        $scope.color = '#fff';
-        $scope.displayDiv = false;
-        getNotes();
-      }, function(response) {
-        getNotes();
-        $scope.error = response.data.message;
-        toastr.success($scope.error, {
-          timeOut: 1000
-        });
-      });
+      noteService.service(url, 'POST', $scope.note)
+                    .then(function(response) {
+                        document.getElementById("title").innerHTML = "";
+                        document.getElementById("body").innerHTML = "";
+                        $scope.color = '#fff';
+                        $scope.displayDiv = false;
+                        getNotes();
+                      }, function(response) {
+                        getNotes();
+                        $scope.error = response.data.message;
+                        toastr.success($scope.error, {
+                          timeOut: 1000
+                        });
+                    });
     }
   }
 
@@ -370,7 +379,7 @@ ToDo.controller('homeController', function($rootScope, $scope, fileReader, $loca
 
   /*//////////////////////////////=====GET OWNER NOTE======///////////////////////////// */
   $scope.getOwner = function(note) {
-    var url = 'getowner';
+    var url = 'getOwner';
     var a = noteService.service(url, 'POST', note)
     a.then(function(response) {
       $scope.owner = response.data;
@@ -563,7 +572,7 @@ ToDo.controller('homeController', function($rootScope, $scope, fileReader, $loca
     note.archive = false;
     note.pinned = false;
     note.reminder = null;
-    var url = 'addnote';
+    var url = 'addNote';
     var a = noteService.service(url, 'POST', note);
     a.then(function(response) {
       $scope.displayDiv = false;
@@ -786,7 +795,7 @@ ToDo.controller('homeController', function($rootScope, $scope, fileReader, $loca
   }
 
   $scope.getCollabUser = function(note) {
-    var url = 'getcollabuser';
+    var url = 'getCollabUser';
     var getCollab = noteService.service(url, 'POST', note);
     getCollab.then(function(response) {
       note.collabuser = response.data;

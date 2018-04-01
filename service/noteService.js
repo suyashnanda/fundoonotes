@@ -13,7 +13,13 @@ ToDo.factory('noteService', function($http, $location, httpService) {
       }
     });
   }
-
+  notes.searchStringInArray = function(str, strArray) {
+    for (var j=0; j<strArray.length; j++) {
+          if (strArray[j].match(str)) return j;
+      }
+      return -1;
+  }
+  
   notes.update = function(url, method, noteId, status, field) {
     return $http({
       method: method,
@@ -69,7 +75,7 @@ ToDo.factory('noteService', function($http, $location, httpService) {
       method: 'POST',
       url: httpService.baseUrl + 'geturl',
       headers: {
-        'url': httpService.baseUrl + url,
+        'url': url,
         'Authorization': localStorage.getItem('token')
       }
     });

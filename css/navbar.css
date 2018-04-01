@@ -30,7 +30,7 @@ md-icon.labelIcon
     padding: 5px;
    	height: 27px;
 }
-   
+
 .labellist{
 	margin-left: 5px;
 }
@@ -54,7 +54,7 @@ md-icon.labelIcon
     float: right;
     font-size: 20px;
     cursor: pointer;
-   
+
 }
 
 .closebtn:hover {
@@ -72,7 +72,7 @@ md-icon.labelIcon
 .pin{
 	width:22px;
 	right: 0;
-	position: absolute;	
+	position: absolute;
 	padding: 0;
 }
 
@@ -81,18 +81,19 @@ md-icon.labelIcon
     top: 20em;
     right: -2em;
 }
-	
+
 	md-dialog{
 		overflow: visible;
 	}
-	
+
 .gotoicon{
-	position: relative;
-    right: -120px;
-	
+	position: absolute;
+  right: 10px;
+
 }
 
 .linkStyle{
+  padding-left: 5px;
 	    font-size: 13px;
     font-style: italic;
     font-family: -webkit-body;
