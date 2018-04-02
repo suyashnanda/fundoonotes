@@ -276,7 +276,6 @@ ToDo.controller('homeController', function($rootScope, $scope, fileReader,
 
   //function to archive a selected note
   $scope.archive = function(note, status) {
-    debugger;
     var url = 'updateStatus';
     var notes = noteService.update(url, 'POST', note.noteId, status, 'archive');
     notes.then(function(response) {
@@ -319,9 +318,9 @@ ToDo.controller('homeController', function($rootScope, $scope, fileReader,
     $scope.collabuser = collabUser;
 
     $scope.removeCollaborator = function(user) {
+      let noteObj = noteLabelsMap(dataToPass);
       var array = noteObj.collaborator;
       var index = array.indexOf(user);
-      let noteObj = noteLabelsMap(dataToPass);
       array.splice(index, 1);
       update(noteObj);
       $mdDialog.hide();
