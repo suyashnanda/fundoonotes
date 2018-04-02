@@ -102,9 +102,9 @@ md-icon.labelIcon {
 }
 
 .md-whiteframe-4dp, .md-whiteframe-z2 {
-  margin-top: 64px !important;
-  width: 18% !important;
-  position: fixed !important;
+    margin-top: 65px !important;
+    width: 25% !important;
+    position: fixed !important;
 }
 
 .logOutPopup {

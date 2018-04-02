@@ -1,8 +1,8 @@
 var ToDo = angular.module('ToDo')
 
 ToDo.controller('homeController', function($rootScope, $scope, fileReader,
-          $location, $timeout, $mdSidenav, noteService, $mdDialog, mdcDateTimeDialog,
-         toastr, $mdUtil, $filter, $interval, $state, Upload, $base64, $q,labelService) {
+  $location, $timeout, $mdSidenav, noteService, $mdDialog, mdcDateTimeDialog,
+  toastr, $mdUtil, $filter, $interval, $state, Upload, $base64, $q, labelService) {
 
   $scope.toggleLeft = buildToggler('left');
   /**function to toggle sidebar*/
@@ -27,27 +27,27 @@ ToDo.controller('homeController', function($rootScope, $scope, fileReader,
       for (var i = 0; i < url.length; i++) {
         note.url[i] = url[i];
         noteService.getUrl(url[i])
-                      .then(function(response) {
-                          var responseData = response.data;
-                          var urlDomain , url;
-                          if (responseData.urlDomain) {
-                              urlDomain = responseData.urlDomain;
-                              url = note.url[noteService.searchStringInArray(urlDomain,note.url)];
-                          }else {
-                              urlDomain = responseData.urlDomain || response.config.headers.url;
-                              url = note.url[noteService.searchStringInArray(urlDomain,note.url)];
-                          }
-                          link[note.size] = {
-                            urlTitle: responseData.urlTitle,
-                            urlImage: responseData.ulrImage,
-                            urlDomain: urlDomain,
-                            url: url
-                          }
-                          note.link[note.size] = link[note.size];
-                          note.size = note.size + 1;
-                        }, function(response) {
+          .then(function(response) {
+            var responseData = response.data;
+            var urlDomain, url;
+            if (responseData.urlDomain) {
+              urlDomain = responseData.urlDomain;
+              url = note.url[noteService.searchStringInArray(urlDomain, note.url)];
+            } else {
+              urlDomain = responseData.urlDomain || response.config.headers.url;
+              url = note.url[noteService.searchStringInArray(urlDomain, note.url)];
+            }
+            link[note.size] = {
+              urlTitle: responseData.urlTitle,
+              urlImage: responseData.ulrImage,
+              urlDomain: urlDomain,
+              url: url
+            }
+            note.link[note.size] = link[note.size];
+            note.size = note.size + 1;
+          }, function(response) {
 
-                      })
+          })
       }
     }
 
@@ -115,7 +115,7 @@ ToDo.controller('homeController', function($rootScope, $scope, fileReader,
     $scope.color = newColor;
   }
   /**set new color to the notes*/
-  $scope.newColor="";
+  $scope.newColor = "";
   $scope.colorChanged = function(note) {
     update(note);
   }
@@ -135,14 +135,14 @@ ToDo.controller('homeController', function($rootScope, $scope, fileReader,
     notes.then(function(response) {
       $scope.notes = response.data;
 
-      $scope.notes = $scope.notes.map((note)=>{
-          note.labels = note.labels.map((label_id)=>{
-                      return {
-                        label_id : label_id,
-                        label_name : labelService.getLabelName(label_id)
-                      };
-                    });
-          return note;
+      $scope.notes = $scope.notes.map((note) => {
+        note.labels = note.labels.map((label_id) => {
+          return {
+            label_id: label_id,
+            label_name: labelService.getLabelName(label_id)
+          };
+        });
+        return note;
       });
       if ($state.current.name == 'label') {
         var filteredNotes = [];
@@ -153,7 +153,7 @@ ToDo.controller('homeController', function($rootScope, $scope, fileReader,
           var lbl = note.labels;
 
           for (var j = 0; j < lbl.length; j++) {
-            if (labelId == lbl[j].label_id ||lbl[j]) {
+            if (labelId == lbl[j].label_id || lbl[j]) {
               filteredNotes.push(note);
             }
           }
@@ -346,14 +346,14 @@ ToDo.controller('homeController', function($rootScope, $scope, fileReader,
   $scope.getOwner = function(note) {
     var url = 'getOwner';
     let noteObj = JSON.parse(JSON.stringify(note));
-    noteObj.labels = noteObj.labels.map((label)=> label.label_id);
+    noteObj.labels = noteObj.labels.map((label) => label.label_id);
     noteService.service(url, 'POST', noteObj)
-                    .then(function(response) {
-                      $scope.owner = response.data;
-                      note.owner = response.data;
-                    }, function(response) {
-                      $scope.error = response.data;
-                    })
+      .then(function(response) {
+        $scope.owner = response.data;
+        note.owner = response.data;
+      }, function(response) {
+        $scope.error = response.data;
+      })
   }
 
   /**function to call when click on notes to update it*/
@@ -365,7 +365,7 @@ ToDo.controller('homeController', function($rootScope, $scope, fileReader,
         pin: $scope.pinned,
         changeImage: $scope.openImageUploader,
         deletelebel: $scope.removeLabel,
-        labels :$scope.labels,
+        labels: $scope.labels,
         collaborator: $scope.collaborators,
         colors: $scope.colors,
         changeColor: $scope.colorChanged,
@@ -386,13 +386,13 @@ ToDo.controller('homeController', function($rootScope, $scope, fileReader,
   }
 
   function mdDialogController($scope, $state, dataToPass, pin, changeImage, deletelebel,
-                    collaborator, colors,labels, changeColor, modelDeleteNote, modelMakeCopy,
-                    user, labelAdd, checkbox, mdArchive,labelService) {
+    collaborator, colors, labels, changeColor, modelDeleteNote, modelMakeCopy,
+    user, labelAdd, checkbox, mdArchive, labelService) {
 
     $scope.colors = colors;
     $scope.user = user;
 
-    $scope.onColorChange=function(newColor,mdDialogData){
+    $scope.onColorChange = function(newColor, mdDialogData) {
       mdDialogData.color = newColor;
       update(mdDialogData);
     }
@@ -486,77 +486,38 @@ ToDo.controller('homeController', function($rootScope, $scope, fileReader,
     });
   }
 
+  $scope.openImageUploader = function(env) {
+    $($(env.currentTarget).find(".picUpload")[0]).trigger("click")
+  }
+  $scope.uploadImage = function(usernotes,selectedfile) {
+    // console.log("selectedfile, usernotes",selectedfile, usernotes);
+    localStorage.setItem('userNote',usernotes)
+    $scope.imageIsLoaded(usernotes,selectedfile[0]);
+  }
 
   /*//////////////////////////////=====UPLOAD Image======///////////////////////////// */
-
-  /*open to crop the selected image through directive*/
-  // $scope.cropped = false;
-  // $scope.uploadImage = function(selectedfiles) {
-  //   $scope.cropped = true;
-  //   ngDialog.open({
-  //     template: 'selectProfilePic',
-  //     className: 'ngdialog-theme-default',
-  //     scope: $scope,
-  //     overlay: true,
-  //     showClose: true
-  //   });
-  // }
-  $scope.openImageUploader = function(env, className) {
-    // console.log("image calling",env, className)
-    // $(className).trigger("click");
-  }
-
-
   $scope.stepsModel = [];
 
-  $scope.imageUpload = function(element) {
-    var reader = new FileReader();
-    reader.onload = $scope.imageIsLoaded;
-    reader.readAsDataURL(element.files[0]);
-  }
-
-  $scope.imageIsLoaded = function(e) {}
-
-
-  $scope.imageIsLoaded = function(e) {
-    // setTimeout(function(){
-    // $scope.$apply(function() {
-      $scope.stepsModel.push(e.target.result);
-      var imageSrc = e.target.result;
-      if ($scope.type === 'input') {
-        $scope.addImg = imageSrc;
-      } else if ($scope.type === 'user') {
-
-        var userId = $scope.user.id;
-
-        var url = 'profileUpdate';
-        var uploadImage = noteService.uploadImage(url, 'POST', imageSrc);
-
-        uploadImage.then(function(response) {
-          $state.reload();
-        }, function(reponse) {
-        })
-      } else if ($scope.type === 'update') {
-        var noteId = $scope.changeIamge.noteId;
-        var url = 'image/' + noteId;
-        var uploadImage = noteService.uploadImage(url, 'POST', imageSrc);
-
-        uploadImage.then(function(response) {
-          getNotes();
-        }, function(reponse) {
-
-        })
-      } else {
-        var noteId = $scope.type.noteId;
-        var url = 'image/' + noteId;
-        var uploadImage = noteService.uploadImage(url, 'POST', imageSrc);
-        uploadImage.then(function(response) {
-          getNotes();
-        }, function(reponse) {
-        })
-      }
-    // });
-    // });
+  $scope.imageIsLoaded = function(noteid,fileData) {
+    var noteId = noteid;
+    // var imageSrc = localStorage.getItem('selectedfile');
+    var formData = new FormData();
+    formData.append('file', fileData);
+    var usernote = localStorage.getItem('userNote');
+    if (usernote === 'user') {
+      var url = 'image/' + noteId;
+      var uploadImage = noteService.uploadImage(url, 'POST', formData);
+      uploadImage.then(function(response) {
+        getNotes();
+      }, function(reponse) {})
+    } else {
+      debugger;
+      var url = 'profileUpdate';
+      var uploadImage = noteService.uploadImage(url, 'POST', formData);
+      uploadImage.then(function(response) {
+        $state.reload();
+      }, function(reponse) {})
+    }
   };
 
   /*//////////////////////////////=====Make a Copy of  note======///////////////////////////// */
@@ -789,9 +750,10 @@ ToDo.controller('homeController', function($rootScope, $scope, fileReader,
   }
 
   $scope.getCollabUser = function(note) {
+    $scope.imageSelected = localStorage.getItem('selectedfile');
     var url = 'getCollabUser';
     let noteObj = JSON.parse(JSON.stringify(note));
-    noteObj.labels = noteObj.labels.map((label)=> label.label_id);
+    noteObj.labels = noteObj.labels.map((label) => label.label_id);
     var getCollab = noteService.service(url, 'POST', noteObj);
     getCollab.then(function(response) {
       note.collabuser = response.data;
