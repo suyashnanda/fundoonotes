@@ -25,9 +25,9 @@
     <md-input-container class="md-block">
       <div ng-bind-html="mdDialogData.body" id="updatedNoteBody" contenteditable="{{editable}}" contenteditabledata aria-multiline="true" role="textbox" style="background-color: rgb(250, 250, 250); outline:none; background-color:{{mdDialogData.color}}"></div>
     </md-input-container>
-
-    <div ng-if="mdDialogData.labels">
-      <span ng-repeat="label in mdDialogData.labels" class="chip">{{label.name}}
+    <div ng-if="mdDialogData.labels && mdDialogData.labels.length > 0">
+      <span ng-repeat="label in mdDialogData.labels" class="chip">
+        <span  ng-bind="getLabelName(label,'hamid')"></span>
   				<span class="closebtn" ng-click="removeLabel(mdDialogData,label)">&times;</span></span>
     </div>
 

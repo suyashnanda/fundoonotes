@@ -14,6 +14,16 @@ ToDo.directive("sideBar", function() {
   };
 });
 
+// Directive to display Links
+ToDo.directive("noteLink", function() {
+  return {
+    templateUrl: 'template/note.link.html',
+    scope:{
+      links : "="
+    }
+  };
+});
+
 //CARD ACTIONS LIKE REMIDER,COLOR SELECTION,ARCHIVE AND DELETE
 ToDo.directive("cardAction", function() {
   return {
@@ -30,9 +40,12 @@ ToDo.directive("cardAction", function() {
         note.color = newColor;
         $scope.colorChanged(note);
       }
-      // $scope.openImageUploader = function(env, className) {
-      //   console.log("image calling",env, className)
-      //   $(className).trigger("click");
+      $scope.openImageUploader = function(env) {
+        console.log("directive calling",env)
+        // $(className).trigger("click");
+      }
+      // $scope.uploadImage = function(selectedfiles) {
+      //   console.log("selectedfiles",selectedfiles);
       // }
     }
   };

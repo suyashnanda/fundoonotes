@@ -20,7 +20,7 @@
 
       <color-picker class="colorIcon" color="color" options="colors" on-color-changed="onColorChange(newColor,note)"></color-picker>
 
-      <md-button style="min-width:25px;padding:5px" aria-label="Add Image" ng-click="openImageUploader($event,'.picUpload')">
+      <md-button style="min-width:25px;padding:5px" aria-label="Add Image" ng-click="openImageUploader($event)">
         <input type="file" ngf-select="uploadImage($files)" ngf-multiple="false" style="display:none" ng-model="picFile" accept="image/*" class="picUpload" />
         <md-tooltip md-direction="bottom">Add Image</md-tooltip>
         <md-icon md-svg-src="images/uploadImg.svg" ng-click="" style="width:21px;"></md-icon>
@@ -30,7 +30,6 @@
         <md-tooltip md-direction="bottom">Archive</md-tooltip>
         <md-icon md-svg-src="images/archive.svg" aria-lable="archive note"></md-icon>
       </md-button>
-
 
       <md-button ng-if="note.archive" style="min-width:25px" ng-click="archive(note,false)" area-label="Unachive">
         <md-tooltip md-direction="bottom">Unarchive</md-tooltip>
@@ -53,11 +52,11 @@
           <md-menu>
             <md-button class="primary" ng-click="$mdMenu.open($event)">Add Label</md-button>
             <md-menu-content>
-              <md-menu-item>
-                <md-checkbox ng-checked="checkboxCheck(note, label)" ng-click="labelToggle(note,label)" ng-repeat="label in labels">
+              <md-menu-item  ng-repeat="label in labels">
+                <md-checkbox ng-checked="checkboxCheck(note, label)" ng-click="labelToggle(note,label)">
                   {{label.name}}
                 </md-checkbox>
-              </md-menu-item><br>
+              </md-menu-item>
             </md-menu-content>
           </md-menu>
         </md-menu-content>

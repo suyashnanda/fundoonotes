@@ -1,6 +1,8 @@
 var ToDo = angular.module('ToDo')
 
-ToDo.controller('homeController', function($rootScope, $scope, fileReader, $location, $timeout, $mdSidenav, noteService, $mdDialog, mdcDateTimeDialog, toastr, $mdUtil, $filter, $interval, $state, Upload, $base64, $q) {
+ToDo.controller('homeController', function($rootScope, $scope, fileReader,
+          $location, $timeout, $mdSidenav, noteService, $mdDialog, mdcDateTimeDialog,
+         toastr, $mdUtil, $filter, $interval, $state, Upload, $base64, $q,labelService) {
 
   $scope.toggleLeft = buildToggler('left');
   /**function to toggle sidebar*/
@@ -12,7 +14,7 @@ ToDo.controller('homeController', function($rootScope, $scope, fileReader, $loca
 
   var urls = [];
   /**function to check url and respond acc to url data*/
-  $scope.checkUlr = function(note) {
+  $scope.checkUrl = function(note) {
     var urlPattern = /(http|ftp|https):\/\/[\w-]+(\.[\w-]+)+([\w.,@?^=%&amp;:\/~+#-]*[\w@?^=%&amp;\/~+#-])?/gi;
     var url = note.body.match(urlPattern);
     var link = [];
@@ -25,29 +27,27 @@ ToDo.controller('homeController', function($rootScope, $scope, fileReader, $loca
       for (var i = 0; i < url.length; i++) {
         note.url[i] = url[i];
         noteService.getUrl(url[i])
-          .then(function(response) {
-            var responseData = response.data;
-            var urlDomain, url = "http://www.sample.com";
-            if (responseData.urlDomain) {
-              urlDomain = responseData.urlDomain;
-              url = note.url[noteService.searchStringInArray(urlDomain, note.url)];
-            } else {
-              let urlArrays = note.url.filter((link) => {
-                return noteService.searchStringInArray(link, note.link.map((obj) => obj.url)) == -1;
-              });
-              urlDomain = url = urlArrays[0];
-            }
-            link[note.size] = {
-              urlTitle: responseData.urlTitle,
-              urlImage: responseData.ulrImage,
-              urlDomain: urlDomain,
-              url: url
-            }
-            note.link[note.size] = link[note.size];
-            note.size = note.size + 1;
-          }, function(response) {
+                      .then(function(response) {
+                          var responseData = response.data;
+                          var urlDomain , url;
+                          if (responseData.urlDomain) {
+                              urlDomain = responseData.urlDomain;
+                              url = note.url[noteService.searchStringInArray(urlDomain,note.url)];
+                          }else {
+                              urlDomain = responseData.urlDomain || response.config.headers.url;
+                              url = note.url[noteService.searchStringInArray(urlDomain,note.url)];
+                          }
+                          link[note.size] = {
+                            urlTitle: responseData.urlTitle,
+                            urlImage: responseData.ulrImage,
+                            urlDomain: urlDomain,
+                            url: url
+                          }
+                          note.link[note.size] = link[note.size];
+                          note.size = note.size + 1;
+                        }, function(response) {
 
-          })
+                      })
       }
     }
 
@@ -224,7 +224,7 @@ ToDo.controller('homeController', function($rootScope, $scope, fileReader, $loca
 
   /**function calling restservices to restore the notes*/
   $scope.restoreNote = function(note) {
-    var url = 'updatestatus';
+    var url = 'updateStatus';
     var notes = noteService.update(url, 'POST', note.noteId, 'false', 'restore');
     notes.then(function(response) {
       getNotes();
@@ -241,7 +241,7 @@ ToDo.controller('homeController', function($rootScope, $scope, fileReader, $loca
 
   /**function calling restservice to delete the note and send that note into trash*/
   $scope.deleteNote = function(note) {
-    var url = 'updatestatus';
+    var url = 'updateStatus';
     var notes = noteService.update(url, 'POST', note.noteId, 'true', 'trash');
     notes.then(function(response) {
       getNotes();
@@ -258,7 +258,7 @@ ToDo.controller('homeController', function($rootScope, $scope, fileReader, $loca
 
   //function to pin a selected note
   $scope.pinned = function(note, status) {
-    var url = 'updatestatus';
+    var url = 'updateStatus';
     var notes = noteService.update(url, 'POST', note.noteId, status, 'pinned');
     notes.then(function(response) {
       getNotes();
@@ -269,7 +269,7 @@ ToDo.controller('homeController', function($rootScope, $scope, fileReader, $loca
 
   //function to archive a selected note
   $scope.archive = function(note, status) {
-    var url = 'updatestatus';
+    var url = 'updateStatus';
     var notes = noteService.update(url, 'POST', note.noteId, status, 'archive');
     notes.then(function(response) {
       getNotes();
@@ -351,6 +351,7 @@ ToDo.controller('homeController', function($rootScope, $scope, fileReader, $loca
         pin: $scope.pinned,
         changeImage: $scope.openImageUploader,
         deletelebel: $scope.removeLabel,
+        labels :$scope.labels,
         collaborator: $scope.collaborators,
         colors: $scope.colors,
         changeColor: $scope.colorChanged,
@@ -370,7 +371,9 @@ ToDo.controller('homeController', function($rootScope, $scope, fileReader, $loca
     });
   }
 
-  function mdDialogController($scope, $state, dataToPass, pin, changeImage, deletelebel, collaborator, colors, changeColor, modelDeleteNote, modelMakeCopy, user, labelAdd, checkbox, mdArchive) {
+  function mdDialogController($scope, $state, dataToPass, pin, changeImage, deletelebel,
+                    collaborator, colors,labels, changeColor, modelDeleteNote, modelMakeCopy,
+                    user, labelAdd, checkbox, mdArchive,labelService) {
     $scope.mdDialogData = dataToPass;
     $scope.colors = colors;
     $scope.user = user;
@@ -379,7 +382,8 @@ ToDo.controller('homeController', function($rootScope, $scope, fileReader, $loca
       mdDialogData.color = newColor;
       update(mdDialogData);
     }
-
+    labelService.labels = labels;
+    // labelService.initiateLabel();
     /*=========================Remove Image=============*/
     $scope.removeImage = function(mdDialogData) {
       mdDialogData.image = null;
@@ -393,6 +397,8 @@ ToDo.controller('homeController', function($rootScope, $scope, fileReader, $loca
       update(dataToPass);
       $mdDialog.hide();
     }
+    $scope.getLabelName = labelService.getLabelName;
+
     $scope.pinned = pin;
     $scope.openImageUploader = changeImage;
     $scope.removeLabel = deletelebel;
@@ -426,13 +432,12 @@ ToDo.controller('homeController', function($rootScope, $scope, fileReader, $loca
 
   /*/////////////////////=============Get All Labels====================///////////////////*/
   var getLabels = function() {
-    $timeout(getLabelsActual, 1000);
+    $timeout(getLabelsActual, 500);
   }
   var getLabelsActual = function() {
-    var url = 'getAllLabel';
-    var labels = noteService.service(url, 'GET');
-    labels.then(function(response) {
+    labelService.initiateLabel().then(function(response) {
       $scope.labels = response.data;
+      labelService.labels = response.data;
     }, function(response) {
       console.log("Error", response.responseMessage);
     })
@@ -477,7 +482,7 @@ ToDo.controller('homeController', function($rootScope, $scope, fileReader, $loca
   //   });
   // }
   $scope.openImageUploader = function(env, className) {
-    console.log("image calling",env, className)
+    // console.log("image calling",env, className)
     // $(className).trigger("click");
   }
 
@@ -638,7 +643,7 @@ ToDo.controller('homeController', function($rootScope, $scope, fileReader, $loca
       var addLabel = noteService.service(url, 'POST', $scope.label)
       addLabel.then(function(response) {
         $mdDialog.hide();
-        $state.reload();
+        $timeout(getLabels);
       }, function(response) {})
     }
   }
@@ -675,21 +680,21 @@ ToDo.controller('homeController', function($rootScope, $scope, fileReader, $loca
   /*==========================DELETE LABEL==============================*/
 
   $scope.deleteLabel = function(label) {
-    var url = 'deletelabel';
+    var url = 'deleteLabel';
     var deletelabel = noteService.label(url, 'POST', label);
     deletelabel.then(function(response) {
-      $state.reload();
-      getLabels();
+      $timeout(getLabels);
     }, function(response) {})
   }
 
-  $scope.getLabelName = function(label) {
-    for (var i = 0; i < $scope.labels.length; i++) {
-      if ($scope.labels[i].labelId == label) {
-        return $scope.labels[i].name;
-      }
-    }
-  }
+  $scope.getLabelName = labelService.getLabelName;
+  // $scope.getLabelName = function(label) {
+  //   for (var i = 0; i < $scope.labels.length; i++) {
+  //     if ($scope.labels[i].labelId == label) {
+  //       return $scope.labels[i].name;
+  //     }
+  //   }
+  // }
 
   /*==========================REMOVE LABEL==============================*/
 

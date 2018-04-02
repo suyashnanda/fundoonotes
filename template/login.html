@@ -1,6 +1,6 @@
 <md-content flex layout="row" layout-align="space-around" layout-padding="layout-padding" ng-cloak="ng-cloak">
   <md-card flex-gt-sm="38" flex-gt-md="36" style=" max-height:700px">
-    <md-card-content>
+    <md-card-content >
       <form name="userForm">
         <h1 class="sfYUmb" data-a11y-title-piece="" id="headingText" jsname="z6sL2b">Sign in</h1>
         <p class="FgbZLd" data-a11y-title-piece="" id="headingSubtext">to continue to ToDo</p>
@@ -22,7 +22,7 @@
           <a ui-sref="forgotPassword">Forgot Password?</a>
         </md-input-container>
 
-        <md-button md-no-ink class="md-primary" ng-click="loginUser()" ng-disabled="loginform.$invalid" style="">Login</md-button>
+        <md-button type="submit" md-no-ink class="md-primary" ng-click="loginUser()" ng-disabled="loginform.$invalid" style="">Login</md-button>
         <a href="#!/register" role="button" style="margin-right: 20%; width:80px"><b>New User?</b></a>
         <p><span id="errmsg"></span></p>
         <button class="loginBtn loginBtn--facebook"><a href="facebookLogin">Login with Facebook</a></button>
