@@ -21,7 +21,8 @@ ToDo.directive("cardAction", function() {
     scope: {
       colors: '=',
       note: '=',
-      colorChanged: '&'
+      colorChanged: '&',
+      openImageUploader:'&'
     },
     templateUrl: 'template/mdCardAction.html',
     controller: function($scope) {
@@ -29,6 +30,10 @@ ToDo.directive("cardAction", function() {
         note.color = newColor;
         $scope.colorChanged(note);
       }
+      // $scope.openImageUploader = function(env, className) {
+      //   console.log("image calling",env, className)
+      //   $(className).trigger("click");
+      // }
     }
   };
 });

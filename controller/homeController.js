@@ -464,10 +464,21 @@ ToDo.controller('homeController', function($rootScope, $scope, fileReader, $loca
 
   /*//////////////////////////////=====UPLOAD Image======///////////////////////////// */
 
-  $scope.openImageUploader = function(type) {
-    $scope.type = type;
-    $('#image').trigger('click');
-    return false;
+  /*open to crop the selected image through directive*/
+  // $scope.cropped = false;
+  // $scope.uploadImage = function(selectedfiles) {
+  //   $scope.cropped = true;
+  //   ngDialog.open({
+  //     template: 'selectProfilePic',
+  //     className: 'ngdialog-theme-default',
+  //     scope: $scope,
+  //     overlay: true,
+  //     showClose: true
+  //   });
+  // }
+  $scope.openImageUploader = function(env, className) {
+    console.log("image calling",env, className)
+    // $(className).trigger("click");
   }
 
 
