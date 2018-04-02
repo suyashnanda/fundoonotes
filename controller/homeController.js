@@ -70,14 +70,12 @@ ToDo.controller('homeController', function($rootScope, $scope, fileReader,
       $scope.width = '100%';
       $scope.list = false;
       $scope.grid = true;
-      getNotes();
       localStorage.setItem('view', 'list');
     } else {
       $scope.view = '30';
       $scope.width = '280px';
       $scope.grid = false;
       $scope.list = true;
-      getNotes();
       localStorage.setItem('view', 'grid');
     }
 
@@ -134,7 +132,6 @@ ToDo.controller('homeController', function($rootScope, $scope, fileReader,
     var notes = noteService.service(url, 'GET', notes);
     notes.then(function(response) {
       $scope.notes = response.data;
-
       $scope.notes = $scope.notes.map((note)=>{
           note.labels = note.labels.map((label_id)=>{
                       return {
@@ -147,20 +144,18 @@ ToDo.controller('homeController', function($rootScope, $scope, fileReader,
       if ($state.current.name == 'label') {
         var filteredNotes = [];
         var labelId = localStorage.getItem('lastLabel');
-
+        console.log(labelId);
         for (var i = 0; i < $scope.notes.length; i++) {
-          var note = $scope.notes[i];
-          var lbl = note.labels;
+            var note = $scope.notes[i];
+            var lbl = note.labels;
 
-          for (var j = 0; j < lbl.length; j++) {
-            if (labelId == lbl[j].label_id ||lbl[j]) {
-              filteredNotes.push(note);
+            for (var j = 0; j < lbl.length; j++) {
+              if (labelId == lbl[j].label_id) {
+                filteredNotes.push(note);
+              }
             }
           }
-
-        }
         $scope.notes = filteredNotes;
-
       }
 
       /*==============REMINDER CHECKER====================*/
@@ -281,6 +276,7 @@ ToDo.controller('homeController', function($rootScope, $scope, fileReader,
 
   //function to archive a selected note
   $scope.archive = function(note, status) {
+    debugger;
     var url = 'updateStatus';
     var notes = noteService.update(url, 'POST', note.noteId, status, 'archive');
     notes.then(function(response) {
@@ -321,17 +317,20 @@ ToDo.controller('homeController', function($rootScope, $scope, fileReader,
     $scope.owner = ownerDetails;
     $scope.userList = listOfUser;
     $scope.collabuser = collabUser;
+
     $scope.removeCollaborator = function(user) {
-      var array = dataToPass.collaborator;
+      var array = noteObj.collaborator;
       var index = array.indexOf(user);
+      let noteObj = noteLabelsMap(dataToPass);
       array.splice(index, 1);
-      update(dataToPass);
+      update(noteObj);
       $mdDialog.hide();
     }
 
     $scope.getUserEmail = function() {
       var url = 'collaborate';
-      var a = noteService.collaborate(url, 'POST', dataToPass, $scope.search);
+      let noteObj = noteLabelsMap(dataToPass);
+      var a = noteService.collaborate(url, 'POST', noteObj, $scope.search);
       a.then(function(response) {
         $state.reload();
         $mdDialog.hide();
@@ -345,8 +344,9 @@ ToDo.controller('homeController', function($rootScope, $scope, fileReader,
   /*//////////////////////////////=====GET OWNER NOTE======///////////////////////////// */
   $scope.getOwner = function(note) {
     var url = 'getOwner';
-    let noteObj = JSON.parse(JSON.stringify(note));
-    noteObj.labels = noteObj.labels.map((label)=> label.label_id);
+
+    let noteObj = noteLabelsMap(note);
+
     noteService.service(url, 'POST', noteObj)
                     .then(function(response) {
                       $scope.owner = response.data;
@@ -454,6 +454,8 @@ ToDo.controller('homeController', function($rootScope, $scope, fileReader,
   var getLabels = function() {
     $timeout(getLabelsActual, 500);
   }
+
+  //
   var getLabelsActual = function() {
     labelService.initiateLabel().then(function(response) {
       $scope.labels = response.data;
@@ -463,10 +465,21 @@ ToDo.controller('homeController', function($rootScope, $scope, fileReader,
     })
   }
   /*//////////////////////////////=====UPDATE FUNCTION======///////////////////////////// */
-
+  var noteLabelsMap = function (note) {
+    let noteObj = JSON.parse(JSON.stringify(note));
+    noteObj.labels = noteObj.labels.map((label)=> {
+      if(label.label_id === undefined){
+        return label;
+      }
+      return label.label_id;
+    });
+    return noteObj;
+  }
   var update = function(note) {
     var url = 'update';
-    var notes = noteService.service(url, 'POST', note);
+    let noteObj = noteLabelsMap(note);
+
+    var notes = noteService.service(url, 'POST', noteObj);
     notes.then(function(response) {
       getNotes();
     }, function(response) {
@@ -669,7 +682,9 @@ ToDo.controller('homeController', function($rootScope, $scope, fileReader,
   }
 
   /*===========================Add Label to note========================*/
-  $scope.labelToggle = function(note, label) {
+  $scope.labelToggle = function(noteObj, label) {
+
+    let note = noteLabelsMap(noteObj);
     var index = -1;
     var i = 0;
     for (i = 0; i < note.labels.length; i++) {
@@ -690,7 +705,7 @@ ToDo.controller('homeController', function($rootScope, $scope, fileReader,
   $scope.checkboxCheck = function(note, label) {
     var labels = note.labels;
     for (var i = 0; i < labels.length; i++) {
-      if (labels[i] === label.labelId) {
+      if (labels[i].label_id === label.labelId) {
         return true;
       }
     }
@@ -790,8 +805,7 @@ ToDo.controller('homeController', function($rootScope, $scope, fileReader,
 
   $scope.getCollabUser = function(note) {
     var url = 'getCollabUser';
-    let noteObj = JSON.parse(JSON.stringify(note));
-    noteObj.labels = noteObj.labels.map((label)=> label.label_id);
+    let noteObj = noteLabelsMap(note);
     var getCollab = noteService.service(url, 'POST', noteObj);
     getCollab.then(function(response) {
       note.collabuser = response.data;
@@ -801,12 +815,14 @@ ToDo.controller('homeController', function($rootScope, $scope, fileReader,
   $scope.adminDashboard = function() {
     $location.path('admin');
   }
-
-  getUser();
-  getUsers();
-  getNotesActual();
+  // $scope.initHomeNote = function () {
+    getUser();
+    getUsers();
+    getNotesActual();
+  // }
   getLabelsActual();
-
+  // checkboxCheck
+  // labelToggle
   $scope.closeNote = function() {
     $scope.addNote();
   }

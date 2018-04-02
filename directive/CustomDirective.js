@@ -31,11 +31,22 @@ ToDo.directive("cardAction", function() {
     scope: {
       colors: '=',
       note: '=',
-      colorChanged: '&',
-      openImageUploader:'&'
+      colorChanged : '&',
+      labels : "=",
+      openImageUploader : '&',
+      checkboxCheck : '&',
+      labelToggle : '&',
+      displayDialog : '&',
+      collaborators : '&',
+      getOwner : '&',
+      archive : '&',
+      deleteNote : '&',
+      removeMySelf : '&',
+      makeCopy : '&'
     },
     templateUrl: 'template/mdCardAction.html',
     controller: function($scope) {
+      $scope.getOwner({note:$scope.note});
       $scope.onColorChange = function(newColor, note) {
         note.color = newColor;
         $scope.colorChanged(note);

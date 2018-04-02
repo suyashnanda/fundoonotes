@@ -15,7 +15,7 @@
 						<img ng-if="!pinStatus" ng-src="images/unpin.svg" ng-show="displayDiv" ng-click="pinUnpin()" />
 						<img ng-if="pinStatus" ng-src="images/pin.svg" style=" margin-bottom: -35px;" ng-click="pinUnpin()" />
 					</div>
-					<md-card-title style="padding: 12pxgetNotes;">
+					<md-card-title style="padding: 12px;">
 						<md-card-title-text>
 							<div>
 								<img ng-if="addImg!=''" ng-src="{{addImg}}" style=" max-width: 100%;" />
@@ -78,7 +78,8 @@
 	     		</span>
 							</div>
 							<!-- CARD ACTION DIRECTIVE -->
-							<card-action colors="colors" note="note" color-changed="colorChanged(note)"></card-action>
+
+							<card-action archive="archive(note)" make-copy="makeCopy(note)" remove-my-self="removeMySelf(note,user)" delete-note="deleteNote(note)" checkbox-check="checkboxCheck(note,label)" display-dialog="displayDialog(note)" collaborators="collaborators(note,$event)" get-owner="getOwner(note)" label-toggle="labelToggle(note,label)" labels="labels" colors="colors" note="note" color-changed="colorChanged(note)"></card-action>
 
 							<md-divider></md-divider>
 							<span layout="column" ng-show="note.link.length" ng-style="{ 'background-color': '#fff'}" flex ng-init="checkUrl(note)">
@@ -116,8 +117,9 @@
 
 					<div ng-if="note.labels">
 						<span ng-repeat="label in note.labels" class="chip">
-  				 <span  ng-bind="label.label_name"></span>
-						<span class="closebtn" ng-click="removeLabel(note,label.label_id)">&times;</span></span>
+	  				 	<span  ng-bind="label.label_name"></span>
+							<span class="closebtn" ng-click="removeLabel(note,label.label_id)">&times;</span>
+						</span>
 					</div>
 
 					<div>
@@ -130,7 +132,7 @@
 					</p>
 
 					<!-- CARD ACTION DIRECTIVE -->
-					<card-action colors="colors" note="note" color-changed="colorChanged(note)" open-image-uploader="openImageUploader()"></card-action>
+					<card-action archive="archive(note)" make-copy="makeCopy(note)" remove-my-self="removeMySelf(note,user)" delete-note="deleteNote(note)" checkbox-check="checkboxCheck(note,label)" display-dialog="displayDialog(note)" collaborators="collaborators(note,$event)" get-owner="getOwner(note)" label-toggle="labelToggle(note,label)" labels="labels" colors="colors" note="note" color-changed="colorChanged(note)"></card-action>
 
 					<md-divider></md-divider>
 					<span layout="column" ng-show="note.link.length" ng-style="{ 'background-color': '#fff'}" flex ng-init="checkUrl(note)">
