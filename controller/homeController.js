@@ -181,6 +181,16 @@ ToDo.controller('homeController', function($rootScope, $scope, fileReader,
     var notes = noteService.service(url, 'GET', notes);
     notes.then(function(response) {
       $scope.notes = response.data;
+
+      $scope.notes = $scope.notes.map((note)=>{
+          note.labels = note.labels.map((label_id)=>{
+                      return {
+                        label_id : label_id,
+                        label_name : labelService.getLabelName(label_id)
+                      };
+                    });
+          return note;
+      });
       if ($state.current.name == 'label') {
         var filteredNotes = [];
         var labelId = localStorage.getItem('lastLabel');
@@ -188,11 +198,13 @@ ToDo.controller('homeController', function($rootScope, $scope, fileReader,
         for (var i = 0; i < $scope.notes.length; i++) {
           var note = $scope.notes[i];
           var lbl = note.labels;
+
           for (var j = 0; j < lbl.length; j++) {
-            if (labelId == lbl[j]) {
+            if (labelId == lbl[j].label_id ||lbl[j]) {
               filteredNotes.push(note);
             }
           }
+
         }
         $scope.notes = filteredNotes;
 
@@ -380,13 +392,15 @@ ToDo.controller('homeController', function($rootScope, $scope, fileReader,
   /*//////////////////////////////=====GET OWNER NOTE======///////////////////////////// */
   $scope.getOwner = function(note) {
     var url = 'getOwner';
-    var a = noteService.service(url, 'POST', note)
-    a.then(function(response) {
-      $scope.owner = response.data;
-      note.owner = response.data;
-    }, function(response) {
-      $scope.error = response.data;
-    })
+    let noteObj = JSON.parse(JSON.stringify(note));
+    noteObj.labels = noteObj.labels.map((label)=> label.label_id);
+    noteService.service(url, 'POST', noteObj)
+                    .then(function(response) {
+                      $scope.owner = response.data;
+                      note.owner = response.data;
+                    }, function(response) {
+                      $scope.error = response.data;
+                    })
   }
 
   /*//////////////////////////////=====UPDATE NOTE======///////////////////////////// */
@@ -421,11 +435,17 @@ ToDo.controller('homeController', function($rootScope, $scope, fileReader,
   function mdDialogController($scope, $state, dataToPass, pin, changeImage, deletelebel,
                     collaborator, colors,labels, changeColor, modelDeleteNote, modelMakeCopy,
                     user, labelAdd, checkbox, mdArchive,labelService) {
-    $scope.mdDialogData = dataToPass;
+
     $scope.colors = colors;
     $scope.user = user;
     labelService.labels = labels;
-    // labelService.initiateLabel();
+    $scope.mdDialogData = dataToPass;
+    // $scope.mdDialogData.labels = $scope.mdDialogData.labels.map((label_id)=>{
+    //   return {
+    //     label_id : label_id,
+    //     label_name : labelService.getLabelName(label_id)
+    //   };
+    // });
     /*=========================Remove Image=============*/
     $scope.removeImage = function(mdDialogData) {
       mdDialogData.image = null;
@@ -800,7 +820,9 @@ ToDo.controller('homeController', function($rootScope, $scope, fileReader,
 
   $scope.getCollabUser = function(note) {
     var url = 'getCollabUser';
-    var getCollab = noteService.service(url, 'POST', note);
+    let noteObj = JSON.parse(JSON.stringify(note));
+    noteObj.labels = noteObj.labels.map((label)=> label.label_id);
+    var getCollab = noteService.service(url, 'POST', noteObj);
     getCollab.then(function(response) {
       note.collabuser = response.data;
     }, function(response) {})
