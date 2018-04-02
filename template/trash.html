@@ -26,8 +26,9 @@
 				</md-card-title>
 				<div ng-if="note.labels">
 					<span ng-repeat="label in note.labels" class="chip">
-  				 <span  ng-bind="getLabelName(label)"></span>
-					<span class="closebtn" ng-click="removeLabel(note,label)">&times;</span></span>
+						<span  ng-bind="label.label_name"></span>
+						<span class="closebtn" ng-click="removeLabel(note,label.label_id)">&times;</span>
+					</span>
 				</div>
 				<md-card-actions>
 					<p id="lastDiv" class="icon">

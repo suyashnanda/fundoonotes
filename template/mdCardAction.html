@@ -1,4 +1,4 @@
-<md-card-actions>
+<md-card-actions >
   <md-panel>
     <p id="lastDiv" class="icon">
       <md-menu>
@@ -8,12 +8,13 @@
         </md-button>
         <md-menu-content>
           <md-menu-item>
-            <button class="md-raised md-primary md-button md-ink-ripple" type="button"="" ng-click="displayDialog(note)">Display Picker</button>
+            <button class="md-raised md-primary md-button md-ink-ripple" type="button"="" ng-click="displayDialog({note:note})">Display Picker</button>
           </md-menu-item>
         </md-menu-content>
       </md-menu>
 
-      <md-button style="min-width:25px;padding:5px" aria-label="Share" ng-click="collaborators(note,$event)" ng-init="getOwner(note)">
+      <md-button style="min-width:25px;padding:5px" aria-label="Share" ng-click="collaborators({note:note,$event:$event})">
+
         <md-tooltip md-direction="bottom">Share</md-tooltip>
         <md-icon md-svg-src="images/share.svg" style="width:21px"></md-icon>
       </md-button>
@@ -26,12 +27,12 @@
         <md-icon md-svg-src="images/uploadImg.svg" ng-click="" style="width:21px;"></md-icon>
       </md-button>
 
-      <md-button ng-if="!note.archive" style="min-width:25px;padding:5px" ng-click="archive(note,true)" aria-label="Archive">
+      <md-button ng-if="!note.archive" style="min-width:25px;padding:5px" ng-click="archive({note : note,status : true})" aria-label="Archive">
         <md-tooltip md-direction="bottom">Archive</md-tooltip>
         <md-icon md-svg-src="images/archive.svg" aria-lable="archive note"></md-icon>
       </md-button>
 
-      <md-button ng-if="note.archive" style="min-width:25px" ng-click="archive(note,false)" area-label="Unachive">
+      <md-button ng-if="note.archive" style="min-width:25px" ng-click="archive({note : note,status : false})" area-label="Unachive">
         <md-tooltip md-direction="bottom">Unarchive</md-tooltip>
         <md-icon md-svg-src="images/unarchive.svg" style="width:18px;"></md-icon>
       </md-button>
@@ -43,17 +44,17 @@
         </md-button>
         <md-menu-content>
           <md-menu-item>
-            <md-button ng-show="note.owner.email==user.email" class="primary" ng-click="deleteNote(note)">Delete</md-button>
-            <md-button ng-show="note.owner.email!=user.email" class="primary" ng-click="removeMySelf(note,user)">RemoveMySelf</md-button>
+            <md-button ng-show="note.owner.email==user.email" class="primary" ng-click="deleteNote({note:note})">Delete</md-button>
+            <md-button ng-show="note.owner.email!=user.email" class="primary" ng-click="removeMySelf({note:note,user:user})">RemoveMySelf</md-button>
           </md-menu-item>
           <md-menu-item>
-            <md-button class="primary" ng-click="makeCopy(note)">Make Copy</md-button>
+            <md-button class="primary" ng-click="makeCopy({note:note})">Make Copy</md-button>
           </md-menu-item>
           <md-menu>
             <md-button class="primary" ng-click="$mdMenu.open($event)">Add Label</md-button>
             <md-menu-content>
               <md-menu-item  ng-repeat="label in labels">
-                <md-checkbox ng-checked="checkboxCheck(note, label)" ng-click="labelToggle(note,label)">
+                <md-checkbox ng-checked="checkboxCheck({note:note, label:label})" ng-click="labelToggle({note:note, label:label})">
                   {{label.name}}
                 </md-checkbox>
               </md-menu-item>
