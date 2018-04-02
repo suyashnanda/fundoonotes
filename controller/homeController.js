@@ -331,7 +331,8 @@ ToDo.controller('homeController', function($rootScope, $scope, fileReader,
       let noteObj = noteLabelsMap(dataToPass);
       var a = noteService.collaborate(url, 'POST', noteObj, $scope.search);
       a.then(function(response) {
-        $state.reload();
+        // $state.reload();
+        getNotes();
         $mdDialog.hide();
       }, function(response) {
         console.log("Error");
@@ -527,7 +528,7 @@ ToDo.controller('homeController', function($rootScope, $scope, fileReader,
       var url = 'profileUpdate';
       var uploadImage = noteService.uploadImage(url, 'POST', formData);
       uploadImage.then(function(response) {
-        $state.reload();
+        getNotes();
       }, function(reponse) {})
     }
   };

@@ -49,14 +49,14 @@
 			   			</span>
             </div>
             <md-divider style="margin-top:20px"></md-divider>
-
-            <md-button class="md-raised " style="margin-top:20px"  ng-click="openImageUploader($event)">
+            <span>Image must be less than 1 MB</span>
+            <md-button class="md-raised " style="margin-top:10px"  ng-click="openImageUploader($event)">
               <input type="file" ngf-select="uploadImage('profile',$files)" ngf-multiple="false" style="display:none" ng-model="picFile" accept="image/*" class="picUpload" />
               <md-tooltip md-direction="bottom">Profile Update</md-tooltip>
               Change Profile
             </md-button>
 
-            <md-button class="md-raised md-primary" style="margin-top:20px" ng-click="logout()">Logout</md-button>
+            <md-button class="md-raised md-primary" style="margin-top:10px" ng-click="logout()">Logout</md-button>
           </div>
         </md-menu-content>
       </md-menu>
