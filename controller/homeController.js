@@ -109,67 +109,20 @@ ToDo.controller('homeController', function($rootScope, $scope, fileReader,
   };
 
   /*ARRAY OF COLORS*/
-  $scope.colors = [{
-      color: '#fff',
-      name: 'White'
-    },
-    {
-      color: '#ff8a80',
-      name: 'Red'
-    },
-    {
-      color: '#ffd180',
-      name: 'Orange'
-    },
-    {
-      color: '#ffff8d',
-      name: 'Yellow'
-    },
-    {
-      color: '#ccff90',
-      name: 'Green'
-    },
-    {
-      color: '#a7ffeb',
-      name: 'Teal'
-    },
-    {
-      color: '#80d8ff',
-      name: 'Blue'
-    },
-    {
-      color: '#82b1ff',
-      name: 'Dark Blue'
-    },
-    {
-      color: '#b388ff',
-      name: 'Purple'
-    },
-    {
-      color: '#f8bbd0',
-      name: 'Pink'
-    },
-    {
-      color: '#d7ccc8',
-      name: 'Brown'
-    },
-    {
-      color: '#cfd8dc',
-      name: 'Grey'
-    }
-  ];
+  $scope.colors = ['transparent', '#FF8A80', '#FFD180', '#FFFF8D', '#CFD8DC', '#80D8FF', '#A7FFEB', '#CCFF90'];
 
   $scope.noteColor = function(newColor, oldColor) {
     $scope.color = newColor;
   }
-  $scope.colorChanged = function(newColor, oldColor, note) {
-    note.color = newColor;
+  /**set new color to the notes*/
+  $scope.newColor="";
+  $scope.colorChanged = function(note) {
     update(note);
   }
+
   var note = function() {
     $location.path('notes');
   }
-
   /*//////////////////////////////=====GET ALL NOTES======///////////////////////////// */
   var getNotes = function() {
     $timeout(getNotesActual, 1000);
@@ -247,19 +200,19 @@ ToDo.controller('homeController', function($rootScope, $scope, fileReader,
       $scope.addImg = "";
 
       noteService.service(url, 'POST', $scope.note)
-                    .then(function(response) {
-                        document.getElementById("title").innerHTML = "";
-                        document.getElementById("body").innerHTML = "";
-                        $scope.color = '#fff';
-                        $scope.displayDiv = false;
-                        getNotes();
-                      }, function(response) {
-                        getNotes();
-                        $scope.error = response.data.message;
-                        toastr.success($scope.error, {
-                          timeOut: 1000
-                        });
-                    });
+        .then(function(response) {
+          document.getElementById("title").innerHTML = "";
+          document.getElementById("body").innerHTML = "";
+          $scope.color = '#fff';
+          $scope.displayDiv = false;
+          getNotes();
+        }, function(response) {
+          getNotes();
+          $scope.error = response.data.message;
+          toastr.success($scope.error, {
+            timeOut: 1000
+          });
+        });
     }
   }
 
@@ -403,7 +356,7 @@ ToDo.controller('homeController', function($rootScope, $scope, fileReader,
                     })
   }
 
-  /*//////////////////////////////=====UPDATE NOTE======///////////////////////////// */
+  /**function to call when click on notes to update it*/
   $scope.updateEditedNote = function(note, event) {
     // Show dialog box for edit a note
     $mdDialog.show({
@@ -438,6 +391,11 @@ ToDo.controller('homeController', function($rootScope, $scope, fileReader,
 
     $scope.colors = colors;
     $scope.user = user;
+
+    $scope.onColorChange=function(newColor,mdDialogData){
+      mdDialogData.color = newColor;
+      update(mdDialogData);
+    }
     labelService.labels = labels;
     $scope.mdDialogData = dataToPass;
     // $scope.mdDialogData.labels = $scope.mdDialogData.labels.map((label_id)=>{
@@ -460,6 +418,7 @@ ToDo.controller('homeController', function($rootScope, $scope, fileReader,
       $mdDialog.hide();
     }
     $scope.getLabelName = labelService.getLabelName;
+
     $scope.pinned = pin;
     $scope.openImageUploader = changeImage;
     $scope.removeLabel = deletelebel;
@@ -530,10 +489,21 @@ ToDo.controller('homeController', function($rootScope, $scope, fileReader,
 
   /*//////////////////////////////=====UPLOAD Image======///////////////////////////// */
 
-  $scope.openImageUploader = function(type) {
-    $scope.type = type;
-    $('#image').trigger('click');
-    return false;
+  /*open to crop the selected image through directive*/
+  // $scope.cropped = false;
+  // $scope.uploadImage = function(selectedfiles) {
+  //   $scope.cropped = true;
+  //   ngDialog.open({
+  //     template: 'selectProfilePic',
+  //     className: 'ngdialog-theme-default',
+  //     scope: $scope,
+  //     overlay: true,
+  //     showClose: true
+  //   });
+  // }
+  $scope.openImageUploader = function(env, className) {
+    // console.log("image calling",env, className)
+    // $(className).trigger("click");
   }
 
 
@@ -549,7 +519,8 @@ ToDo.controller('homeController', function($rootScope, $scope, fileReader,
 
 
   $scope.imageIsLoaded = function(e) {
-    $scope.$apply(function() {
+    // setTimeout(function(){
+    // $scope.$apply(function() {
       $scope.stepsModel.push(e.target.result);
       var imageSrc = e.target.result;
       if ($scope.type === 'input') {
@@ -564,7 +535,6 @@ ToDo.controller('homeController', function($rootScope, $scope, fileReader,
         uploadImage.then(function(response) {
           $state.reload();
         }, function(reponse) {
-
         })
       } else if ($scope.type === 'update') {
         var noteId = $scope.changeIamge.noteId;
@@ -583,10 +553,10 @@ ToDo.controller('homeController', function($rootScope, $scope, fileReader,
         uploadImage.then(function(response) {
           getNotes();
         }, function(reponse) {
-
         })
       }
-    });
+    // });
+    // });
   };
 
   /*//////////////////////////////=====Make a Copy of  note======///////////////////////////// */

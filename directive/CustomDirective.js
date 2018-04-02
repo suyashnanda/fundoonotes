@@ -27,8 +27,27 @@ ToDo.directive("noteLink", function() {
 //CARD ACTIONS LIKE REMIDER,COLOR SELECTION,ARCHIVE AND DELETE
 ToDo.directive("cardAction", function() {
   return {
-    templateUrl: 'template/mdCardAction.html'
-    // controller: 'homeController',
+    restrict: 'E',
+    scope: {
+      colors: '=',
+      note: '=',
+      colorChanged: '&',
+      openImageUploader:'&'
+    },
+    templateUrl: 'template/mdCardAction.html',
+    controller: function($scope) {
+      $scope.onColorChange = function(newColor, note) {
+        note.color = newColor;
+        $scope.colorChanged(note);
+      }
+      $scope.openImageUploader = function(env) {
+        console.log("directive calling",env)
+        // $(className).trigger("click");
+      }
+      // $scope.uploadImage = function(selectedfiles) {
+      //   console.log("selectedfiles",selectedfiles);
+      // }
+    }
   };
 });
 //NEW NOT ACTION FRO UPDATE

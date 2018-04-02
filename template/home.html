@@ -29,6 +29,8 @@
 							</div>
 						</md-card-title-text>
 					</md-card-title>
+
+					<!-- DIRECTIVE NOTES ACTION -->
 					<new-note-action></new-note-action>
 				</md-card>
 				<div flex="15"></div>
@@ -65,8 +67,9 @@
 
 							<div ng-if="note.labels">
 								<span ng-repeat="label in note.labels" class="chip">
-  				 <span  ng-bind="label.label_name"></span>
-								<span class="closebtn" ng-click="removeLabel(note,label.label_id)">&times;</span></span>
+  				 				<span  ng-bind="label.label_name"></span>
+									<span class="closebtn" ng-click="removeLabel(note,label.label_id)">&times;</span>
+								</span>
 							</div>
 
 							<div>
@@ -75,7 +78,7 @@
 	     		</span>
 							</div>
 							<!-- CARD ACTION DIRECTIVE -->
-							<card-action></card-action>
+							<card-action colors="colors" note="note" color-changed="colorChanged(note)"></card-action>
 
 							<md-divider></md-divider>
 							<span layout="column" ng-show="note.link.length" ng-style="{ 'background-color': '#fff'}" flex ng-init="checkUrl(note)">
@@ -127,7 +130,7 @@
 					</p>
 
 					<!-- CARD ACTION DIRECTIVE -->
-					<card-action></card-action>
+					<card-action colors="colors" note="note" color-changed="colorChanged(note)" open-image-uploader="openImageUploader()"></card-action>
 
 					<md-divider></md-divider>
 					<span layout="column" ng-show="note.link.length" ng-style="{ 'background-color': '#fff'}" flex ng-init="checkUrl(note)">
