@@ -518,17 +518,16 @@ ToDo.controller('homeController', function($rootScope, $scope, fileReader,
     var usernote = localStorage.getItem('userNote');
     if (usernote === 'user') {
       var url = 'image/' + noteId;
-      var uploadImage = noteService.uploadImage(url, 'POST', formData);
-      uploadImage.then(function(response) {
-        getNotes();
-      }, function(reponse) {})
+      noteService.uploadImage(url, 'POST', formData)
+                    .then(function(response) {
+                      getNotes();
+                    }, function(reponse) {})
     } else {
-      debugger;
-      var url = 'profileUpdate';
-      var uploadImage = noteService.uploadImage(url, 'POST', formData);
-      uploadImage.then(function(response) {
-        getNotes();
-      }, function(reponse) {})
+      var url = 'profileupdate';
+      noteService.uploadImage(url, 'POST', formData)
+                    .then(function(response) {
+                      getNotes();
+                    }, function(reponse) {})
     }
   };
 
@@ -540,14 +539,14 @@ ToDo.controller('homeController', function($rootScope, $scope, fileReader,
     note.pinned = false;
     note.reminder = null;
     var url = 'addnote';
-    var a = noteService.service(url, 'POST', note);
-    a.then(function(response) {
-      $scope.displayDiv = false;
-      getNotes();
-    }, function(response) {
-      getNotes();
-      $scope.error = response.data.message;
-    });
+    noteService.service(url, 'POST', note)
+                  .then(function(response) {
+                    $scope.displayDiv = false;
+                    getNotes();
+                  }, function(response) {
+                    getNotes();
+                    $scope.error = response.data.message;
+                  });
   }
 
   /*//////////////////////////////=====LOGOUT ======///////////////////////////// */
