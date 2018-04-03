@@ -6,7 +6,7 @@ ToDo.factory('userRegisterService', function($http, $location, httpService) {
   details.registerUser = function(user) {
     return $http({
       method: "POST",
-      url: httpService.baseUrl + 'userRegister',
+      url: httpService.baseUrl + 'userregister',
       data: user
     })
   }

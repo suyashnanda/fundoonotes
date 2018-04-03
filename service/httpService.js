@@ -3,7 +3,7 @@ var ToDo = angular.module('ToDo')
 ToDo.factory('httpService', function() {
 
   return {
-    baseUrl: "http://192.168.0.144:8080/ToDo/",
+    baseUrl: "http://192.168.0.180:8080/fundoonote/api/",
     getToken: function() {
       var token = localStorage.getItem('token');
       this.token = token;

@@ -128,7 +128,7 @@ ToDo.controller('homeController', function($rootScope, $scope, fileReader,
 
   /**function to get all the notes with its label attached to it*/
   var getNotesActual = function() {
-    var url = 'getNotes';
+    var url = 'getnotes';
     var notes = noteService.service(url, 'GET', notes);
     notes.then(function(response) {
       $scope.notes = response.data;
@@ -144,7 +144,6 @@ ToDo.controller('homeController', function($rootScope, $scope, fileReader,
       if ($state.current.name == 'label') {
         var filteredNotes = [];
         var labelId = localStorage.getItem('lastLabel');
-        console.log(labelId);
         for (var i = 0; i < $scope.notes.length; i++) {
             var note = $scope.notes[i];
             var lbl = note.labels;
@@ -181,7 +180,7 @@ ToDo.controller('homeController', function($rootScope, $scope, fileReader,
     $scope.note = {};
     $scope.note.title = document.getElementById("title").innerHTML;
     $scope.note.body = document.getElementById("body").innerHTML;
-    var url = 'addNote';
+    var url = 'addnote';
     if ((document.getElementById("title").innerHTML == "" && document.getElementById("body").innerHTML == "")) {
       $scope.displayDiv = false;
       $scope.imageSrc = "";
@@ -231,7 +230,7 @@ ToDo.controller('homeController', function($rootScope, $scope, fileReader,
 
   /**function calling restservices to restore the notes*/
   $scope.restoreNote = function(note) {
-    var url = 'updateStatus';
+    var url = 'updatestatus';
     var notes = noteService.update(url, 'POST', note.noteId, 'false', 'restore');
     notes.then(function(response) {
       getNotes();
@@ -248,7 +247,7 @@ ToDo.controller('homeController', function($rootScope, $scope, fileReader,
 
   /**function calling restservice to delete the note and send that note into trash*/
   $scope.deleteNote = function(note) {
-    var url = 'updateStatus';
+    var url = 'updatestatus';
     var notes = noteService.update(url, 'POST', note.noteId, 'true', 'trash');
     notes.then(function(response) {
       getNotes();
@@ -265,7 +264,7 @@ ToDo.controller('homeController', function($rootScope, $scope, fileReader,
 
   //function to pin a selected note
   $scope.pinned = function(note, status) {
-    var url = 'updateStatus';
+    var url = 'updatestatus';
     var notes = noteService.update(url, 'POST', note.noteId, status, 'pinned');
     notes.then(function(response) {
       getNotes();
@@ -276,7 +275,7 @@ ToDo.controller('homeController', function($rootScope, $scope, fileReader,
 
   //function to archive a selected note
   $scope.archive = function(note, status) {
-    var url = 'updateStatus';
+    var url = 'updatestatus';
     var notes = noteService.update(url, 'POST', note.noteId, status, 'archive');
     notes.then(function(response) {
       getNotes();
@@ -342,7 +341,7 @@ ToDo.controller('homeController', function($rootScope, $scope, fileReader,
 
   /*//////////////////////////////=====GET OWNER NOTE======///////////////////////////// */
   $scope.getOwner = function(note) {
-    var url = 'getOwner';
+    var url = 'getowner';
 
     let noteObj = noteLabelsMap(note);
 
@@ -438,7 +437,7 @@ ToDo.controller('homeController', function($rootScope, $scope, fileReader,
 
   /*/////////////////////////////=======GET USER===================/////////////////////*/
   var getUser = function() {
-    var url = 'getUser';
+    var url = 'getuser';
     var user = noteService.service(url, 'GET');
 
     user.then(function(response) {
@@ -488,7 +487,7 @@ ToDo.controller('homeController', function($rootScope, $scope, fileReader,
   }
 
   var updateUser = function(user) {
-    var url = 'updateUser';
+    var url = 'updateuser';
     var notes = noteService.service(url, 'POST', user);
     notes.then(function(response) {
       getNotes();
@@ -578,7 +577,7 @@ ToDo.controller('homeController', function($rootScope, $scope, fileReader,
     note.archive = false;
     note.pinned = false;
     note.reminder = null;
-    var url = 'addNote';
+    var url = 'addnote';
     var a = noteService.service(url, 'POST', note);
     a.then(function(response) {
       $scope.displayDiv = false;
@@ -752,7 +751,7 @@ ToDo.controller('homeController', function($rootScope, $scope, fileReader,
   /*============================GET ALL USER=========================================*/
 
   var getUsers = function() {
-    var url = "getUserList";
+    var url = "getuserlist";
     var users = noteService.service(url, 'GET');
     users.then(function(response) {
       $scope.userList = response.data;
@@ -803,7 +802,7 @@ ToDo.controller('homeController', function($rootScope, $scope, fileReader,
   }
 
   $scope.getCollabUser = function(note) {
-    var url = 'getCollabUser';
+    var url = 'getcollabuser';
     let noteObj = noteLabelsMap(note);
     var getCollab = noteService.service(url, 'POST', noteObj);
     getCollab.then(function(response) {

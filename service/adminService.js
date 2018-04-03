@@ -5,7 +5,7 @@ ToDo.factory('adminService', function($http, $location, httpService) {
   adminData.getUsers = function() {
     return $http({
       method: "GET",
-      url: httpService.baseUrl + 'admin/getAllUser',
+      url: httpService.baseUrl + 'admin/getalluser',
       headers: {
         'Authorization': localStorage.getItem('token')
       }

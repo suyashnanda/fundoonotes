@@ -7,7 +7,7 @@ angular.module('ToDo')
             return this.labels;
           }
           this.initiateLabel = function () {
-          var url = 'getAllLabel';
+          var url = 'getalllabel';
               var labels = noteService.service(url, 'GET');
               labels.then((response)=>{
                 this.labels = response.data;
@@ -25,32 +25,4 @@ angular.module('ToDo')
             }
           }
       });
-      // .factory('labelService', function(noteService) {
-      //   return {
-      //     labels : [],
-      //     labelSetted : false,
-      //     getLabels : function() {
-      //       return this.labels;
-      //     },
-      //     initiateLabel : function () {
-      //       var url = 'getAllLabel';
-      //       var labels = noteService.service(url, 'GET');
-      //         labels.then((response)=>{
-      //           this.labels = response.data;
-      //           this.labelSetted = true;
-      //           return Promise.resolve(response);
-      //         }, (response) => {
-      //           console.log("Error", response.responseMessage);
-      //           return Promise.reject(response);
-      //         });
-      //       return labels;
-      //     },
-      //     getLabelName : function(label) {
-      //       for (var i = 0; i < this.labels.length; i++) {
-      //         if (this.labels[i].labelId == label) {
-      //           return this.labels[i].name;
-      //         }
-      //       }
-      //     }
-      //   }
-      // })
+      
