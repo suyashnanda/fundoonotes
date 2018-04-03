@@ -19,7 +19,7 @@ ToDo.factory('noteService', function($http, $location, httpService) {
       }
       return -1;
   }
-  
+
   notes.update = function(url, method, noteId, status, field) {
     return $http({
       method: method,
@@ -42,7 +42,8 @@ ToDo.factory('noteService', function($http, $location, httpService) {
       url: httpService.baseUrl + url,
       data: image,
       headers: {
-        'Authorization': localStorage.getItem('token')
+        'Authorization': localStorage.getItem('token'),
+        "Content-Type":undefined
       }
     })
   }

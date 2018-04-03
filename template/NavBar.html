@@ -34,7 +34,7 @@
           <md-tooltip md-direction="bottom">{{user.email}}</md-tooltip>
           <img ng-src="{{user.picUrl}}" alt="{{user.name.charAt(0)}}" style=" height: 100%;width: 100%;">
         </md-button>
-        <md-menu-content width="2" md-direction="bottom" style="overflow: hidden;">
+        <md-menu-content width="2" md-direction="bottom" style="overflow: hidden;background-color:#efe7e7;height:150px">
           <div flex>
             <div layout="row" flex>
               <div layout="column">
@@ -48,9 +48,15 @@
 			   			</div>
 			   			</span>
             </div>
-            <md-divider></md-divider>
-            <md-button class="md-raised " ng-click="openImageUploader('user')">Change Profile</md-button>
-            <md-button class="md-raised md-primary" ng-click="logout()">Logout</md-button>
+            <md-divider style="margin-top:20px"></md-divider>
+            <span>Image must be less than 1 MB</span>
+            <md-button class="md-raised " style="margin-top:10px"  ng-click="openImageUploader($event)">
+              <input type="file" ngf-select="uploadImage('profile',$files)" ngf-multiple="false" style="display:none" ng-model="picFile" accept="image/*" class="picUpload" />
+              <md-tooltip md-direction="bottom">Profile Update</md-tooltip>
+              Change Profile
+            </md-button>
+
+            <md-button class="md-raised md-primary" style="margin-top:10px" ng-click="logout()">Logout</md-button>
           </div>
         </md-menu-content>
       </md-menu>

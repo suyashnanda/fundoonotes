@@ -22,7 +22,7 @@
       <color-picker class="colorIcon" color="color" options="colors" on-color-changed="onColorChange(newColor,note)"></color-picker>
 
       <md-button style="min-width:25px;padding:5px" aria-label="Add Image" ng-click="openImageUploader($event)">
-        <input type="file" ngf-select="uploadImage($files)" ngf-multiple="false" style="display:none" ng-model="picFile" accept="image/*" class="picUpload" />
+        <input type="file" ngf-select="uploadImage($files,'user')" ngf-multiple="false" style="display:none" ng-model="picFile" accept="image/*" class="picUpload" />
         <md-tooltip md-direction="bottom">Add Image</md-tooltip>
         <md-icon md-svg-src="images/uploadImg.svg" ng-click="" style="width:21px;"></md-icon>
       </md-button>

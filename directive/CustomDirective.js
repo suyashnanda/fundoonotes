@@ -18,8 +18,8 @@ ToDo.directive("sideBar", function() {
 ToDo.directive("noteLink", function() {
   return {
     templateUrl: 'template/note.link.html',
-    scope:{
-      links : "="
+    scope: {
+      links: "="
     }
   };
 });
@@ -32,6 +32,7 @@ ToDo.directive("cardAction", function() {
       colors: '=',
       note: '=',
       colorChanged : '&',
+      imageIsLoaded: '&',
       labels : "=",
       openImageUploader : '&',
       checkboxCheck : '&',
@@ -52,12 +53,14 @@ ToDo.directive("cardAction", function() {
         $scope.colorChanged(note);
       }
       $scope.openImageUploader = function(env) {
-        console.log("directive calling",env)
-        // $(className).trigger("click");
+        $($(env.currentTarget).find(".picUpload")[0]).trigger("click")
       }
-      // $scope.uploadImage = function(selectedfiles) {
-      //   console.log("selectedfiles",selectedfiles);
-      // }
+      $scope.uploadImage = function(selectedfile, usernotes) {
+        $scope.imageFile = selectedfile;
+        localStorage.setItem('selectedfile', $scope.imageFile[0]);
+        localStorage.setItem('userNote', usernotes)
+        $scope.imageIsLoaded({note_id:$scope.note.noteId,fileData:$scope.imageFile[0]});
+      }
     }
   };
 });
