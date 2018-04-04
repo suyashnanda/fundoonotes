@@ -1,5 +1,6 @@
-var ToDo = angular.module('ToDo', ['ui.router', 'ngSanitize', 'ngAnimate', 'ngMaterial', 'tb-color-picker', 'ngMaterialDatePicker', 'toastr', 'ngFileUpload', 'base64', 'ngMessages'])
-
+var ToDo = angular.module('ToDo', ['ui.router', 'ngSanitize', 'ngAnimate',
+                  'ngMaterial', 'tb-color-picker', 'ngMaterialDatePicker',
+                  'toastr', 'ngFileUpload', 'base64', 'ngMessages','ToDo.Http'])
 
 ToDo.config(function($httpProvider, $stateProvider, $urlRouterProvider) {
   $httpProvider.interceptors.push('jwtInjector');
