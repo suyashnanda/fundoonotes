@@ -53,3 +53,6 @@
 .tool {
   z-index: 1000;
 }
+.color-palette {
+  position: fixed!important;
+}
