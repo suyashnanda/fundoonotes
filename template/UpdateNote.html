@@ -28,7 +28,7 @@
     <div ng-if="mdDialogData.labels && mdDialogData.labels.length > 0">
       <span ng-repeat="label in mdDialogData.labels" class="chip">
         <span  ng-bind="label.label_name"></span>
-  				<span class="closebtn" ng-click="removeLabel(mdDialogData,label.label_id)">&times;</span></span>
+      <span class="closebtn" ng-click="removeLabel(mdDialogData,label.label_id)">&times;</span></span>
     </div>
 
     <span ng-repeat="user in  mdDialogData.collaborator">

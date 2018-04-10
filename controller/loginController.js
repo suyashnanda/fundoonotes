@@ -18,11 +18,6 @@ ToDo.controller('loginController', function($scope, loginService, $location, toa
         toastr.error($scope.error, {
           timeOut: 1000
         });
-      } else if (response.status == 401) {
-        $scope.error = response.data.responseMessage;
-        toastr.error($scope.error, {
-          timeOut: 1000
-        });
       } else {
         $scope.error = "Enter valid data";
         toastr.error($scope.error, {

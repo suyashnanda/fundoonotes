@@ -7,7 +7,6 @@ ToDo.filter('labelFilter', function() {
     if (labelId == undefined) {
       return notes;
     }
-
     for (var i = 0; i < notes.length; i++) {
       var note = notes[i];
       var lbl = note.labels;

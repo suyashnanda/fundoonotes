@@ -1,6 +1,6 @@
 var ToDo = angular.module('ToDo');
 
-ToDo.controller('adminController', function($rootScope, $scope, fileReader, $location, $timeout, $mdSidenav, noteService, $mdDialog, mdcDateTimeDialog, toastr, $filter, $interval, $state, Upload, $base64, $q, adminService) {
+ToDo.controller('adminController', function($rootScope, $scope, $location, $timeout, $mdSidenav, noteService, $mdDialog, mdcDateTimeDialog, toastr, $filter, $interval, $state, Upload, $base64, $q, adminService) {
 
   $scope.users = [];
   /**function to get user from services*/

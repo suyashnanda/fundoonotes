@@ -4,7 +4,6 @@
 	<title>Fundoo Notes</title>
 	<meta name="viewport" content="width=device-width" initial-scale="1">
 	<link href="favicon.ico" rel="shortcut icon">
-
 	<!--  External Css supports with angular -->
 	<link rel="stylesheet" href="bower_components/angular-material-datetimepicker/dist/material-datetimepicker.min.css">
 	<link rel="stylesheet" href="bower_components/angular-material/angular-material.min.css">
@@ -12,7 +11,8 @@
 	<link rel="stylesheet" href="bower_components/colorpicker/dist/colorPickerStyle.css">
 	<link rel="stylesheet" href="bower_components/angular-toastr/dist/angular-toastr.css">
 	<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" charset="utf-8"></script>
+
+	<!-- External js support with angular -->
 	<script src="bower_components/angular/angular.js"></script>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 	<script type="text/javascript" src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
@@ -24,31 +24,31 @@
 	<script src="bower_components/angular-sanitize/angular-sanitize.js"></script>
 	<script src="bower_components/angular-sanitize/angular-sanitize.min.js"></script>
 	<script src="bower_components/ui-navbar/src/navbar.js"></script>
-	<!--  <script src="bower_components/tinycolor/dist/tinycolor-min.js"></script> -->
 	<script src="bower_components/colorpicker/dist/colorPicker.js"></script>
 
-	<!--==============DATE PICKER  -->
+	<!--DATE PICKER -->
 	<script src="bower_components/angular-material-datetimepicker/dist/angular-material-datetimepicker.min.js"></script>
 	<script src="bower_components/moment/min/moment.min.js"></script>
 
-	<!--==============Toster==================================  -->
+	<!--Toster-->
 	<script src="bower_components/angular-toastr/dist/angular-toastr.tpls.js"></script>
 
-	<!--==============FileUpload==================================  -->
+	<!--FileUpload-->
 	<script src="bower_components/ng-file-upload/ng-file-upload-shim.min.js"></script>
 	<script src="bower_components/ng-file-upload/ng-file-upload.min.js"></script>
+	<script src="bower_components/angular-base64/angular-base64.js"></script>
+	<script src="bower_components/angular-base64-upload/dist/angular-base64-upload.js"></script>
+	<script src="bower_components/angular-base64-upload/dist/angular-base64-upload.min.js"></script>
 
 	<!-- CSS -->
-	<!-- <link rel="stylesheet" type="text/css" href="css/signup.css"> -->
 	<link rel="stylesheet" type="text/css" href="css/login.css">
-	<!-- <link rel="stylesheet" type="text/css" href="css/signup.css"> -->
 	<link rel="stylesheet" type="text/css" href="css/card.css">
 	<link rel="stylesheet" type="text/css" href="css/navbar.css">
 	<link rel="stylesheet" type="text/css" href="css/urlLink.css">
 	<link rel="stylesheet" type="text/css" href="css/uiView.css">
 
 	<!-- JAVASCRIPT -->
-	<script type="text/javascript" src="script/app.js"></script>
+	<script src="script/app.js"></script>
 
 	<!-- CONTROLLERS -->
 	<script src="controller/loginController.js"></script>
@@ -58,20 +58,21 @@
 	<script src="controller/adminController.js"></script>
 
 	<!-- SERVICES -->
-	<script type="text/javascript" src="service/loginService.js"></script>
-	<script type="text/javascript" src="service/userRegisterService.js"></script>
-	<script type="text/javascript" src="service/noteService.js"></script>
-	<script type="text/javascript" src="service/tokenservice.js"></script>
-	<script type="text/javascript" src="service/adminService.js"></script>
-	<script type="text/javascript" src="service/httpService.js"></script>
-	<script type="text/javascript" src="service/label.service.js"></script>
+	<script src="service/loginService.js"></script>
+	<script src="service/userRegisterService.js"></script>
+	<script src="service/noteService.js"></script>
+	<script src="service/tokenservice.js"></script>
+	<script src="service/adminService.js"></script>
+	<script src="service/httpService.js"></script>
+	<script src="service/label.service.js"></script>
 
 	<!-- DIRECTIVE -->
-	<script type="text/javascript" src="directive/CustomDirective.js"></script>
-	<script type="text/javascript" src="directive/filter.js"></script>
-	<script src="bower_components/angular-base64/angular-base64.js"></script>
-	<script src="bower_components/angular-base64-upload/dist/angular-base64-upload.js"></script>
-	<script src="bower_components/angular-base64-upload/dist/angular-base64-upload.min.js"></script>
+	<script src="directive/filter.js"></script>
+	<script src="directive/cardAction.js"></script>
+	<script src="directive/newNoteAction.js"></script>
+	<script src="directive/notelink.js"></script>
+	<script src="directive/sidebar.js"></script>
+	<script src="directive/toolbar.js"></script>
 </head>
 
 <body ng-app="ToDo">

@@ -1,7 +1,9 @@
 var ToDo = angular.module('ToDo')
 
+/**admin service to all get and post requests*/
 ToDo.factory('adminService', function($http, $location, httpService) {
   var adminData = {};
+  //get all the users
   adminData.getUsers = function() {
     return $http({
       method: "GET",
@@ -12,6 +14,7 @@ ToDo.factory('adminService', function($http, $location, httpService) {
     });
   }
 
+  //get notes
   adminData.getNotes = function() {
     return $http({
       method: "POST",
@@ -22,6 +25,7 @@ ToDo.factory('adminService', function($http, $location, httpService) {
     });
   }
 
+  //get notes count
   adminData.getNotesCount = function(userId) {
     return $http({
       method: "POST",
@@ -32,7 +36,7 @@ ToDo.factory('adminService', function($http, $location, httpService) {
     });
   }
 
-
+  //get count
   adminData.getCount = function(userId) {
     return $http({
       method: "GET",

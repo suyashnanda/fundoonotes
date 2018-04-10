@@ -53,6 +53,7 @@
 .tool {
   z-index: 1000;
 }
-.color-palette {
+/* added by dilip and removed by suyash */
+/* .color-palette {
   position: fixed!important;
-}
+} */

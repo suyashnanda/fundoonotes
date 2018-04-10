@@ -14,10 +14,10 @@ ToDo.factory('noteService', function($http, $location, httpService) {
     });
   }
   notes.searchStringInArray = function(str, strArray) {
-    for (var j=0; j<strArray.length; j++) {
-          if (strArray[j].match(str)) return j;
-      }
-      return -1;
+    for (var j = 0; j < strArray.length; j++) {
+      if (strArray[j].match(str)) return j;
+    }
+    return -1;
   }
 
   notes.update = function(url, method, noteId, status, field) {
@@ -32,7 +32,6 @@ ToDo.factory('noteService', function($http, $location, httpService) {
       headers: {
         'Authorization': localStorage.getItem('token')
       }
-
     })
   }
 
@@ -43,7 +42,7 @@ ToDo.factory('noteService', function($http, $location, httpService) {
       data: image,
       headers: {
         'Authorization': localStorage.getItem('token'),
-        "Content-Type":undefined
+        "Content-Type": undefined
       }
     })
   }

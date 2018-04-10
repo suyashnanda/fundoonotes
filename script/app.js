@@ -1,7 +1,8 @@
 var ToDo = angular.module('ToDo', ['ui.router', 'ngSanitize', 'ngAnimate',
-                  'ngMaterial', 'tb-color-picker', 'ngMaterialDatePicker',
-                  'toastr', 'ngFileUpload', 'base64', 'ngMessages','ToDo.Http'])
-
+  'ngMaterial', 'tb-color-picker', 'ngMaterialDatePicker',
+  'toastr', 'ngFileUpload', 'base64', 'ngMessages', 'ToDo.Http'
+])
+/**config file to define all the states*/
 ToDo.config(function($httpProvider, $stateProvider, $urlRouterProvider) {
   $httpProvider.interceptors.push('jwtInjector');
 
@@ -22,7 +23,6 @@ ToDo.config(function($httpProvider, $stateProvider, $urlRouterProvider) {
       templateUrl: 'template/home.html',
       controller: 'homeController'
     })
-
 
     .state('forgotPassword', {
       url: '/forgotpassword',
@@ -79,5 +79,4 @@ ToDo.config(function($httpProvider, $stateProvider, $urlRouterProvider) {
     });
 
   $urlRouterProvider.otherwise('login');
-
 });

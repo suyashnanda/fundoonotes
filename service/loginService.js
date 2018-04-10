@@ -1,7 +1,3 @@
-/**
- *
- */
-
 var ToDo = angular.module('ToDo')
 
 ToDo.factory('loginService', function($http, $location, httpService) {
