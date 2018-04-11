@@ -252,7 +252,7 @@ ToDo.controller('homeController', function($rootScope, $scope,
       });
     }, function(response) {
       $scope.error = response.data.responseMessage;
-      toastr.success($scope.error, {
+      toastr.error($scope.error, {
         timeOut: 1000
       });
     });
@@ -264,8 +264,14 @@ ToDo.controller('homeController', function($rootScope, $scope,
     var notes = noteService.update(url, 'POST', note.noteId, status, 'pinned');
     notes.then(function(response) {
       getNotes();
+      toastr.success("Note pinned successfully", {
+        timeOut: 1000
+      });
     }, function(response) {
       $scope.error = response.data.responseMessage;
+      toastr.error($scope.error, {
+        timeOut: 1000
+      });
     });
   }
 
@@ -275,8 +281,14 @@ ToDo.controller('homeController', function($rootScope, $scope,
     var notes = noteService.update(url, 'POST', note.noteId, status, 'archive');
     notes.then(function(response) {
       getNotes();
+      toastr.success("Note archive successfully", {
+        timeOut: 1000
+      });
     }, function(response) {
       $scope.error = response.data.responseMessage;
+      toastr.error($scope.error, {
+        timeOut: 1000
+      });
     });
   }
 
@@ -472,9 +484,11 @@ ToDo.controller('homeController', function($rootScope, $scope,
     var notes = noteService.service(url, 'POST', noteObj);
     notes.then(function(response) {
       getNotes();
+      toastr.success("note updated successfully");
     }, function(response) {
       getNotes();
       $scope.error = response.data.responseMessage;
+      toastr.error($scope.error);
     });
   }
 
@@ -510,12 +524,14 @@ ToDo.controller('homeController', function($rootScope, $scope,
       noteService.uploadImage(url, 'POST', formData)
         .then(function(response) {
           getNotes();
+          toastr.success("successfully uploaded image");
         }, function(reponse) {})
     } else {
       var url = 'profileupdate';
       noteService.uploadImage(url, 'POST', formData)
         .then(function(response) {
           getNotes();
+          toastr.success("successfully uploaded profile");
         }, function(reponse) {})
     }
   };
@@ -531,9 +547,11 @@ ToDo.controller('homeController', function($rootScope, $scope,
       .then(function(response) {
         $scope.displayDiv = false;
         getNotes();
+        toastr.success("successfully make a copy");
       }, function(response) {
         getNotes();
         $scope.error = response.data.message;
+        toastr.error($scope.error);
       });
   }
 

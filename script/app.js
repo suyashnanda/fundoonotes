@@ -1,9 +1,10 @@
-var ToDo = angular.module('ToDo', ['ui.router', 'ngSanitize', 'ngAnimate',
+var ToDo = angular.module('ToDo', ['ui.router', 'ngSanitize','angular-loading-bar','ngAnimate',
   'ngMaterial', 'tb-color-picker', 'ngMaterialDatePicker',
   'toastr', 'ngFileUpload', 'base64', 'ngMessages', 'ToDo.Http'
 ])
 /**config file to define all the states*/
-ToDo.config(function($httpProvider, $stateProvider, $urlRouterProvider) {
+ToDo.config(function($httpProvider, $stateProvider, $urlRouterProvider,cfpLoadingBarProvider) {
+  cfpLoadingBarProvider.includeSpinner = true;
   $httpProvider.interceptors.push('jwtInjector');
 
   $stateProvider.state('register', {

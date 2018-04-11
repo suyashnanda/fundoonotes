@@ -29,6 +29,7 @@
     "angular-material-datetimepicker": "^1.5.1",
     "angular-jquery": "^0.2.1",
     "colorpicker": "https://github.com/bladepop/colorpicker.git",
-    "angular-material-icons": "^0.7.1"
+    "angular-material-icons": "^0.7.1",
+    "angular-loading-bar": "^0.9.0"
   }
 }

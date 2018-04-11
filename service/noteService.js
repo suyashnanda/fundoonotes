@@ -1,6 +1,6 @@
 var ToDo = angular.module('ToDo');
 
-ToDo.factory('noteService', function($http, $location, httpService) {
+ToDo.factory('noteService', function($http, $location, httpService,cfpLoadingBar) {
   var notes = {};
   notes.service = function(url, method, note) {
 
@@ -80,6 +80,13 @@ ToDo.factory('noteService', function($http, $location, httpService) {
       }
     });
   }
+  /**Loading bar*/
+  notes.start = function() {
+    cfpLoadingBar.start();
+  };
 
+  notes.complete = function() {
+    cfpLoadingBar.complete();
+  }
   return notes;
 })
